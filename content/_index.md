@@ -8,10 +8,15 @@ toc: false
 ## 探索
 
 {{< cards >}}
-  {{< card link="docs" title="文档" icon="book-open" >}}
-  {{< card link="about" title="关于" icon="user" >}}
+  {{< card link="docs" title="输出文档" icon="pencil-alt" >}}
+  {{< card link="showreel" title="作品集合" icon="sparkles" >}}
+{{< /cards >}}
+
+{{< cards >}}
+  {{< card link="references" title="参考资料" icon="book-open" >}}
+  {{< card link="greatresource" title="资源好物" icon="thumb-up" >}}
 {{< /cards >}}
 
 ## 文件
 
-更多信息，请查看 [Hextra的github仓库](https://imfing.github.io/hextra) 以及 [Hextra帮助文档](https://imfing.github.io/hextra/docs/getting-started/)
+更多信息，请查看 [Hextra主题的github仓库](https://imfing.github.io/hextra) 以及 [Hextra主题的帮助文档](https://imfing.github.io/hextra/docs/getting-started/)

@@ -42,3 +42,8 @@ system =  "跟随系统"
 tags =  "标签"
 viewAsMarkdown =  "以 Markdown 查看"
 
+# 顶栏主菜单
+Documentation = "所有文档"
+About = "关于"
+Contact = "联系"
+Search = "搜索"

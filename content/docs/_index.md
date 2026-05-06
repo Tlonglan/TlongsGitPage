@@ -1,11 +1,11 @@
 ---
-title: 文档
-next: 演示上一页
+title: 演示文档
+next: 上一篇文档
 ---
 
 
 ## 欢迎来到我的博客!
-这是一个<font color=green size=5><b>演示文档</b></font>, 主要是演示支持的 markdown 功能
+这是一个 <font color=green size=5><strong>演示文档</strong></font>, 主要是演示支持的 markdown 功能
 
 This is a **demo** of the theme's *documentation* layout.
 
