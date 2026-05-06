@@ -1,5 +1,5 @@
 # Hugo configuration file
-title: My Site
+title: 蓝天龙的小站
 
 # import hextra as module
 module:
@@ -11,36 +11,51 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+    # 支持数学公式
+    extensions:
+      passthrough:
+        delimiters:
+          block: [['\[', '\]'], ["$$", "$$"]]
+          inline: [['\(', '\)'], ["$","$"]]
+        enable: true
 
   # enable hextra syntax highlight
   highlight:
     noClasses: false
 
+
+    
 menu:
   main:
-    - name: Docs
+    - identifier: Documentation
+      name: 文档
       pageRef: /docs
       weight: 1
-    - name: About
+    - identifier: About
+      name: 关于
       pageRef: /about
       weight: 2
-    - name: Contact ↗
-      url: "https://github.com/imfing"
+    - identifier: Contact
+      name: 联系 ↗
+      url: "https://github.com/Tlonglan"
       weight: 3
-    - name: Search
+    - identifier: Search
+      name: 搜索
       weight: 4
       params:
         type: search
-    - name: GitHub
+    - identifier: GitHub
+      name: GitHub
       weight: 5
-      url: "https://github.com/imfing/hextra-starter-template"
+      url: "https://github.com/Tlonglan/TlongsGitPage"
       params:
         icon: github
-    - name: Twitter
+    - identifier: Bilibili
+      name: Bilibili
       weight: 6
-      url: "https://twitter.com/"
+      url: "https://bilibili.com/"
       params:
-        icon: x-twitter
+        icon: Bilibili
 
 params:
   navbar:
@@ -54,3 +69,11 @@ params:
   editURL:
     enable: true
     base: "https://github.com/imfing/hextra-starter-template/edit/main/content"
+
+
+defaultContentLanguage: zh-CN
+languages:
+  zh-CN:
+    languageName: 简体中文
+    weight: 1
+

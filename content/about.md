@@ -1,6 +1,6 @@
 ---
-title: About
+title: 关于
 type: about
 ---
 
-This is the about page.
+这是一个关于页面

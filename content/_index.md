@@ -1,17 +1,17 @@
 ---
-title: My Site
+title: 蓝天龙的小站
 toc: false
 ---
 
-This is the landing page.
+这是欢迎页面
 
-## Explore
+## 探索
 
 {{< cards >}}
-  {{< card link="docs" title="Docs" icon="book-open" >}}
-  {{< card link="about" title="About" icon="user" >}}
+  {{< card link="docs" title="文档" icon="book-open" >}}
+  {{< card link="about" title="关于" icon="user" >}}
 {{< /cards >}}
 
-## Documentation
+## 文件
 
-For more information, visit [Hextra](https://imfing.github.io/hextra).
+更多信息，请查看 [Hextra的github仓库](https://imfing.github.io/hextra) 以及 [Hextra帮助文档](https://imfing.github.io/hextra/docs/getting-started/)

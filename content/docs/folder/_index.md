@@ -1,10 +1,10 @@
 ---
-title: Folder
+title: 专栏
 type: docs
-prev: docs/first-page
-next: docs/folder/leaf
+prev: 文档/演示上一页
+next: 文档/专栏/演示子页面
 sidebar:
   open: true
 ---
 
-Pages can be organized into folders.
+这个主题支持用文件夹整理文档
