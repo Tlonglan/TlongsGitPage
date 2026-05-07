@@ -1,5 +1,6 @@
 ---
 title: 资源好物
+type: blog
 toc: false
 ---
 

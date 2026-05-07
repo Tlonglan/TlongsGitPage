@@ -1,0 +1,89 @@
+{{ define "main" }}
+  <div class='hx:mx-auto hx:flex hextra-max-page-width'>
+    {{ partial "sidebar.html" (dict "context" .) }}
+    {{ partial "toc.html" . }}
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-4 hx:md:px-12">
+        {{ partial "breadcrumb.html" (dict "page" . "enable" true) }}
+        <div class="content">
+          {{ if .Title }}
+          <div class="hx:flex hx:flex-col hx:sm:flex-row hx:items-start hx:sm:items-center hx:sm:justify-between hx:gap-4 hx:mb-4">
+            <h1 class="hx:mb-0">{{ .Title }}</h1>
+            {{ partial "components/page-context-menu" . }}
+          </div>
+          {{ end }}
+
+        <!-- ========= 新增：文章元信息（分类、标签、系列、最后编辑时间） ========= -->
+        {{ if or .Params.categories .Params.tags .Params.series .Lastmod }}
+        <div class="hx:mb-6 hx:flex hx:flex-col hx:gap-y-2 hx:text-sm hx:text-gray-500 dark:hx:text-gray-400">
+          
+          <!-- 第一行：分类、标签、系列 -->
+          {{ $hasAny := or .Params.categories .Params.tags .Params.series }}
+          {{ if $hasAny }}
+          <div class="hx:flex hx:flex-wrap hx:items-center hx:gap-x-6 hx:gap-y-1">
+            <span class="hx:mr-2">本文收录于</span>
+            
+            {{ $separator := false }}
+            
+            {{ with .Params.categories }}
+              <div>
+                <span>分类：</span>
+                {{ range $idx, $cat := . }}
+                  <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.categories) 1) }}，{{ end }}
+                {{ end }}
+              </div>
+              {{ $separator = true }}
+            {{ end }}
+            
+            {{ if and $separator (or .Params.tags .Params.series) }}
+              <span class="hx:mx-2">，</span>
+            {{ end }}
+            
+            {{ with .Params.tags }}
+              <div>
+                <span>标签：</span>
+                {{ range $idx, $tag := . }}
+                  <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.tags) 1) }}，{{ end }}
+                {{ end }}
+              </div>
+              {{ $separator = true }}
+            {{ end }}
+            
+            {{ if and $separator .Params.series }}
+              <span class="hx:mx-2">，</span>
+            {{ end }}
+            
+            {{ with .Params.series }}
+              <div>
+                <span>系列：</span>
+                {{ range $idx, $ser := . }}
+                  <a href="{{ "/series/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.series) 1) }}，{{ end }}
+                {{ end }}
+              </div>
+            {{ end }}
+          </div>
+          {{ end }}
+          <!-- 第二行：最后编辑时间 -->
+          {{ if .Lastmod }}
+          <div>
+            {{ $lastmod := .Lastmod.Format (site.Params.dateFormat | default "2006-01-02") }}
+            <span>{{ site.Params.ui.lastmodLabel | default "最后编辑时间" }}：</span>
+            <time datetime="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">{{ $lastmod }}</time>
+          </div>
+          {{ end }}
+        </div>
+        {{ end }}
+        <!-- ========= 新增结束 ========= -->
+
+          {{ .Content }}
+        </div>
+        {{ partial "components/last-updated.html" . }}
+        {{- if (site.Params.page.displayPagination | default true) -}}
+          {{- partial "components/pager.html" . -}}
+        {{- end -}}
+        {{ partial "components/comments.html" . }}
+      </main>
+    </article>
+  </div>
+{{ end }}
+

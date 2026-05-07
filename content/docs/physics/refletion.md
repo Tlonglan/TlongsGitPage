@@ -1,6 +1,8 @@
 ---
 title: 反射系数
 type: docs
+categories: [物理]
+tags: [方案教程, 精选内容]
 ---
 
 

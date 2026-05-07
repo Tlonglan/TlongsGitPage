@@ -19,18 +19,30 @@ markup:
   goldmark:
     renderer:
       unsafe: true
-    # 支持数学公式
+
+    
     extensions:
+      # 支持数学公式
       passthrough:
         delimiters:
           block: [['\[', '\]'], ["$$", "$$"]]
           inline: [['\(', '\)'], ["$","$"]]
         enable: true
+      # 启用 mark 扩展来支持 == == 语法
+      extras:
+        mark:             
+          enable: true
 
   # enable hextra syntax highlight
   highlight:
     noClasses: false
 
+
+# 分类聚合
+taxonomies:
+  tag: "tags"   
+  category: "categories"
+  series: series
 
 
 # 顶栏菜单 
@@ -38,73 +50,79 @@ menu:
   main:
     - identifier: home
       name: Home
-      pageRef: /home
+      pageRef: /
       weight: 1
       params:
         type: link
         icon: home
 
 
-    - identifier: series
-      name: Series
+    - identifier: collection
+      name: Collection
       weight: 2
     - identifier: documentation
       name: Doc
-      parent: series
+      parent: collection
       pageRef: /docs
       weight: 1
       params:
         type: link
         icon: pencil-alt
-    - identifier: showreel
-      name: Showreel
-      parent: series
-      pageRef: /showreel
-      weight: 2
-      params:
-        type: link
-        icon: sparkles
     - identifier: references
       name: References
-      parent: series
+      parent: collection
       pageRef: /references
-      weight: 3
+      weight: 2
       params:
         type: link
         icon: book-open
     - identifier: greatresource
       name: Greatresource
-      parent: series
+      parent: collection
       pageRef: /greatresource
-      weight: 4
+      weight: 3
       params:
         type: link
         icon: thumb-up
       
     
-    
+    - identifier: showreel
+      name: Showreel
+      pageRef: /showreel
+      weight: 3
+      params:
+        type: link
+        icon: sparkles
+    - identifier: archives
+      name: Archives
+      pageRef: /archives
+      weight: 4
+    - identifier: tags
+      name: Tags
+      pageRef: /tags
+      weight: 5
     - identifier: about
       name: About
       pageRef: /about
-      weight: 3
+      weight: 6
     - identifier: contact
       name: Contact ↗
       url: "https://github.com/Tlonglan"
-      weight: 4
+      weight: 7
     - identifier: search
       name: Search
-      weight: 5
+      weight: 8
       params:
         type: search
     - identifier: gitHub
       name: GitHub
-      weight: 6
+      weight: 9
       url: "https://github.com/Tlonglan/TlongsGitPage"
       params:
         icon: github
     - identifier: bilibili
       name: Bilibili
-      weight: 7
+      weight: 10
       url: "https://bilibili.com/"
       params:
         icon: Bilibili
@@ -112,6 +130,8 @@ menu:
 
 # 相关配置参数
 params:
+
+  # 设置徽标内容以及跳转页面
   navbar:
     displayTitle: true
     displayLogo: true
@@ -129,13 +149,40 @@ params:
   editURL:
     enable: true
     base: "https://github.com/imfing/hextra-starter-template/edit/main/content"
-
+  
+  # 文档信息展示
+  ui:
+    categoryLabel: "分类"
+    tagLabel: "标签"
+    lastmodLabel: "最后更新"
+  dateFormat: "2006-01-02"   # 默认即可
+  
   # 代码块复制按钮
   highlight:
     copy:
       enable: true
       # hover | always
       display: hover
+  
+  # 评论系统
+  comments:
+    enable: true
+    type: giscus
+
+    giscus:
+      repo: Tlonglan/TlongsGitPage
+      repoId: R_kgDOSVn-gw
+      category: Announcements
+      categoryId: DIC_kwDOSVn-g84C8fg7
+      lang: "zh-CN"                 # 建议明确指定语言，用 "zh-CN" 亦可
+      reactionsEnabled: 1           # 开启 reactions
+      inputPosition: "top"          # 评论输入框位置，可选 "top" 或 "bottom"
+      loading: "lazy"               # 懒加载
+
+  # 设置归档的默认目录和日期格式，即按时间线顺序查看
+  archives:
+    section: docs
+    dateFormat: "Jan 02"
 
 
 # 在行内使用短代码显示图标，例如 {{< icon "github" >}}

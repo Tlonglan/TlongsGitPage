@@ -1,0 +1,25 @@
+<!-- 从远程仓库中一份内容然后修改，限制评论系统只在docs 和 blog 中加载 -->
+
+{{- /* 1. 确定是否显示评论 */ -}}
+{{- $showComments := false -}}
+
+{{- /* 2. 如果用户显式设置了 .Params.comments，则完全听从用户设置 */ -}}
+{{- if isset .Params "comments" -}}
+    {{- $showComments = .Params.comments -}}
+{{- else -}}
+    {{- /* 3. 否则，按照页面 Section 类型决定：只有 docs 或 blog 才显示 */ -}}
+    {{- $showComments = (or (eq .Section "docs") (eq .Section "blog")) -}}
+{{- end -}}
+
+{{- /* 4. 根据最终决定渲染评论组件 */ -}}
+{{- if $showComments -}}
+    {{- $enableComments := site.Params.comments.enable | default false -}}
+    {{ if not (eq .Params.comments nil) }}
+      {{ $enableComments = .Params.comments }}
+    {{ end }}
+    {{- if $enableComments -}}
+      {{- if eq site.Params.comments.type "giscus" -}}
+        {{ partial "components/giscus.html" . }}
+      {{- end -}}
+    {{- end -}}
+{{- end -}}

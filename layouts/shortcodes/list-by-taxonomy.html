@@ -1,0 +1,68 @@
+{{/*
+  用法：
+  {{< list-by-taxonomy taxonomy="tags" terms="Hugo,Hextra" match="any" >}}
+  {{< list-by-taxonomy taxonomy="categories" terms="技术,前端" match="all" exclude="旧文" >}}
+*/}}
+
+{{- $taxonomy := .Get "taxonomy" | default "tags" -}}
+{{- $termsParam := .Get "terms" -}}
+{{- $match := .Get "match" | default "any" -}}
+{{- $excludeParam := .Get "exclude" -}}
+
+{{- $pages := site.RegularPages -}}
+{{- $terms := split $termsParam "," -}}
+{{- $excludeTerms := slice -}}
+{{- if $excludeParam -}}
+    {{- $excludeTerms = split $excludeParam "," -}}
+{{- end -}}
+
+{{- $filtered := slice -}}
+
+{{- range $pages -}}
+    {{- $pageTax := .Param $taxonomy | default slice -}}
+    {{- $include := false -}}
+
+    {{- if eq $match "all" -}}
+        {{- $include = true -}}
+        {{- range $index, $term := $terms -}}
+            {{- if not (in $pageTax $term) -}}
+                {{- $include = false -}}
+            {{- end -}}
+        {{- end -}}
+    {{- else -}}
+        {{- range $index, $term := $terms -}}
+            {{- if in $pageTax $term -}}
+                {{- $include = true -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- if $include -}}
+        {{- if $excludeParam -}}
+            {{- range $index, $term := $excludeTerms -}}
+                {{- if in $pageTax $term -}}
+                    {{- $include = false -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- if $include -}}
+        {{- $filtered = $filtered | append . -}}
+    {{- end -}}
+{{- end -}}
+
+{{- if $filtered -}}
+    <ul class="post-list">
+        {{- range $filtered.ByTitle -}}
+            <li>
+                <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                {{- with .Date -}}
+                    <span class="post-date"> ({{ .Format "2006-01-02" }})</span>
+                {{- end -}}
+            </li>
+        {{- end -}}
+    </ul>
+{{- else -}}
+    <p>⚠️ 没有找到符合条件的文章。</p>
+{{- end -}}
