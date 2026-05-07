@@ -4,7 +4,7 @@ type: docs
 ---
 
 
-一个计算菲涅尔反射系数的Mathematica包
+一个计算菲涅尔反射系数的`Mathematica`包
 
 
 
