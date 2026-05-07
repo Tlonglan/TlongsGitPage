@@ -38,7 +38,7 @@ menu:
   main:
     - identifier: home
       name: Home
-      pageRef: /
+      pageRef: /home
       weight: 1
       params:
         type: link
@@ -116,8 +116,8 @@ params:
     displayTitle: true
     displayLogo: true
     logo:
-      path: logo.svg
-      dark: logo-dark.svg
+      path: static/logo.svg
+      dark: static/logo-dark.svg
       link: /
       width: 40
       height: 20
