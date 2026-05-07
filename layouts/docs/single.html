@@ -28,7 +28,7 @@
 
               {{ with .Params.tags }}
                 <div>
-                  <span>【类型】为: </span>
+                  <span>【类型】为 : </span>
                   {{ range $idx, $tag := . }}
                     <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.tags) 1) }}，{{ end }}
                   {{ end }}
