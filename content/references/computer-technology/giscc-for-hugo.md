@@ -1,7 +1,12 @@
 ---
 title: 为你的 HUGO 博客集成 Giscus 评论系统
 type: docs
-tags: [Hugo, 配置, 方案教程, 精选内容]
+series: [精选内容]
+tags: [方案教程]
+categories: [Hugo, 配置]
+draft: false
+date: 2026-05-06
+lastmod: 2026-05-07
 ---
 
 - `来源`: [为你的 HUGO 博客集成 Giscus 评论系统](https://loommii.github.io/zh-cn/posts/add-giscus-comments-to-hugo-blog/)

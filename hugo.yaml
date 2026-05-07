@@ -57,50 +57,76 @@ menu:
         icon: home
 
 
-    - identifier: collection
-      name: Collection
+    - identifier: quick-start
+      name: quick-start
       weight: 2
     - identifier: documentation
       name: Doc
-      parent: collection
       pageRef: /docs
       weight: 1
+      parent: quick-start
       params:
         type: link
         icon: pencil-alt
     - identifier: references
       name: References
-      parent: collection
       pageRef: /references
+      parent: quick-start
       weight: 2
       params:
         type: link
         icon: book-open
     - identifier: greatresource
       name: Greatresource
-      parent: collection
       pageRef: /greatresource
       weight: 3
+      parent: quick-start
       params:
         type: link
         icon: thumb-up
-      
+
+
+    - identifier: content-series
+      name: content-series
+      weight: 3
+    - identifier: websitetags
+      name: Tags
+      pageRef: /tags
+      weight: 1
+      parent: content-series
+      params:
+        type: link
+        icon: hashtag
+    - identifier: series
+      name: Series
+      pageRef: /series
+      weight: 2
+      parent: content-series
+      params:
+        type: link
+        icon: briefcase
+    - identifier: archives
+      name: Archives
+      pageRef: /archives
+      weight: 3
+      parent: content-series
+    
+    - identifier: categories
+      name: Categories
+      pageRef: /categories
+      weight: 4 
+    
     
     - identifier: showreel
       name: Showreel
       pageRef: /showreel
-      weight: 3
+      weight: 5
       params:
         type: link
         icon: sparkles
-    - identifier: archives
-      name: Archives
-      pageRef: /archives
-      weight: 4
-    - identifier: tags
-      name: Tags
-      pageRef: /tags
-      weight: 5
+
+
+
     - identifier: about
       name: About
       pageRef: /about
@@ -154,7 +180,8 @@ params:
   ui:
     categoryLabel: "分类"
     tagLabel: "标签"
-    lastmodLabel: "最后更新"
+    dateLabel: "发布时间"
+    lastmodLabel: "更新时间"
   dateFormat: "2006-01-02"   # 默认即可
   
   # 代码块复制按钮

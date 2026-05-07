@@ -1,16 +1,20 @@
 ---
-title: 反射系数
+title: 金属与非金属的反射系数计算
 type: docs
-categories: [物理]
-tags: [方案教程, 精选内容]
+series: [计算, 精选内容]
+tags: [方案教程]
+categories: [物理, 菲涅尔现象]
+draft: false
+date: 2026-05-06
+lastmod: 2026-05-07
 ---
 
 
-一个计算菲涅尔反射系数的`Mathematica`包
+一个计算菲涅尔反射系数的`Mathematica`程序包
 
 
 
-{{< details title="Mathematica程序包" closed="true" >}}
+{{< details title="菲涅尔系数计算程序包" closed="true" >}}
 
 ```Mathematica
 BeginPackage["FresnelReflection`"];

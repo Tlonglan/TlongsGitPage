@@ -13,68 +13,96 @@
           </div>
           {{ end }}
 
-        <!-- ========= 新增：文章元信息（分类、标签、系列、最后编辑时间） ========= -->
-        {{ if or .Params.categories .Params.tags .Params.series .Lastmod }}
-        <div class="hx:mb-6 hx:flex hx:flex-col hx:gap-y-2 hx:text-sm hx:text-gray-500 dark:hx:text-gray-400">
-          
-          <!-- 第一行：分类、标签、系列 -->
-          {{ $hasAny := or .Params.categories .Params.tags .Params.series }}
-          {{ if $hasAny }}
-          <div class="hx:flex hx:flex-wrap hx:items-center hx:gap-x-6 hx:gap-y-1">
-            <span class="hx:mr-2">本文收录于</span>
+          <!-- ========= 新增：文章元信息（分类、标签、系列、发布时间、最后编辑时间） ========= -->
+          {{ if or .Params.categories .Params.tags .Params.series .Date .Lastmod }}
+          <div class="hx:mb-6 hx:flex hx:flex-col hx:gap-y-1 hx:text-sm hx:text-gray-500 dark:hx:text-gray-400">
             
-            {{ $separator := false }}
+            <!-- 第一行：标签、系列 -->
+            {{ $hasAny := or .Params.categories .Params.tags .Params.series }}
             
-            {{ with .Params.categories }}
-              <div>
-                <span>分类：</span>
-                {{ range $idx, $cat := . }}
-                  <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.categories) 1) }}，{{ end }}
-                {{ end }}
-              </div>
-              {{ $separator = true }}
-            {{ end }}
-            
-            {{ if and $separator (or .Params.tags .Params.series) }}
-              <span class="hx:mx-2">，</span>
-            {{ end }}
-            
-            {{ with .Params.tags }}
-              <div>
-                <span>标签：</span>
-                {{ range $idx, $tag := . }}
-                  <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.tags) 1) }}，{{ end }}
-                {{ end }}
-              </div>
-              {{ $separator = true }}
-            {{ end }}
-            
-            {{ if and $separator .Params.series }}
-              <span class="hx:mx-2">，</span>
-            {{ end }}
-            
-            {{ with .Params.series }}
-              <div>
-                <span>系列：</span>
-                {{ range $idx, $ser := . }}
-                  <a href="{{ "/series/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.series) 1) }}，{{ end }}
-                {{ end }}
-              </div>
-            {{ end }}
-          </div>
-          {{ end }}
-          <!-- 第二行：最后编辑时间 -->
-          {{ if .Lastmod }}
-          <div>
-            {{ $lastmod := .Lastmod.Format (site.Params.dateFormat | default "2006-01-02") }}
-            <span>{{ site.Params.ui.lastmodLabel | default "最后编辑时间" }}：</span>
-            <time datetime="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">{{ $lastmod }}</time>
-          </div>
-          {{ end }}
-        </div>
-        {{ end }}
-        <!-- ========= 新增结束 ========= -->
+            {{ if $hasAny }}
+            <div class="hx:flex hx:flex-wrap hx:items-center hx:gap-x-6 hx:gap-y-1">
+              <span class="hx:mr-1">本文</span>
+              {{ $separator := false }}
+              
 
+              {{ with .Params.tags }}
+                <div>
+                  <span>【类型】为: </span>
+                  {{ range $idx, $tag := . }}
+                    <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.tags) 1) }}，{{ end }}
+                  {{ end }}
+                </div>
+                {{ $separator = true }}
+              {{ end }}
+
+
+              {{ if and $separator .Params.series }}
+                <span class="hx:mx-2">，</span>
+              {{ end }}
+              
+              {{ with .Params.series }}
+                <div>
+                  <span>收录于【系列】: </span>
+                  {{ range $idx, $ser := . }}
+                    <a href="{{ "/series/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.series) 1) }}，{{ end }}
+                  {{ end }}
+                </div>
+              {{ end }}
+
+              
+              
+            </div>
+            {{ end }}
+            
+            <!-- 第二行：主题分类 -->
+            {{ $hasAny := or .Params.categories}}
+            <div class="hx:flex hx:flex-wrap hx:items-center hx:gap-x-4 hx:gap-y-1">
+              {{ with .Params.categories }}
+                  <div>
+                    <span class="hx:mr-1">内容</span><span>【相关主题】:</span>
+                    {{ range $idx, $cat := . }}
+                      <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}" class="hover:hx:underline">{{ . }}</a>{{ if ne $idx (sub (len $.Params.categories) 1) }}，{{ end }}
+                    {{ end }}
+                  </div>
+                {{ end }}
+            </div>
+            
+            
+            <!-- 第三行：发布时间 & 最后编辑时间 -->
+            <div class="hx:flex hx:flex-wrap hx:items-center hx:gap-x-4 hx:gap-y-1">
+              {{ if .Date }}
+                {{ $date := .Date | time.Format (site.Params.dateFormat | default "2006-01-02") }}
+                <div class="hx:flex hx:items-center hx:gap-1">
+                    <div class="hx:w-4 hx:h-4">
+                      {{- partial "utils/icon.html" (dict "name" "calendar") -}}
+                    </div>
+                    <!-- {{ partial "utils/icon.html" (dict "name" "calendar" "attributes" "height=15") }} -->
+                    <span>{{ site.Params.ui.dateLabel | default "发布时间" }} :</span>
+                    <time datetime="{{ .Date | time.Format "2006-01-02T15:04:05Z07:00" }}">{{ $date }}</time>
+                  </div>
+              {{ end }}
+
+              <span style="white-space: pre;">    </span>
+
+              {{ if .Lastmod }}
+                {{ $lastmod := .Lastmod | time.Format (site.Params.dateFormat | default "2006-01-02") }}
+                {{ if and .Date (ne .Date .Lastmod) }}
+                  <div class="hx:flex hx:items-center hx:gap-1">
+                    <div class="hx:w-4 hx:h-4">
+                      {{ partial "utils/icon.html" (dict "name" "clock") }}
+                    </div>
+                    <span>{{ site.Params.ui.lastmodLabel | default "最后编辑时间" }} :</span>
+                    <time datetime="{{ .Lastmod | time.Format "2006-01-02T15:04:05Z07:00" }}">{{ $lastmod }}</time>
+                  </div>
+                {{ end }}
+              {{ end }}
+            </div>
+
+          </div>
+          {{ end }}
+          <!-- ========= 新增结束 ========= -->
+          <hr style="margin-top: 3px; margin-bottom: 3px;">
           {{ .Content }}
         </div>
         {{ partial "components/last-updated.html" . }}
@@ -86,4 +114,3 @@
     </article>
   </div>
 {{ end }}
-
