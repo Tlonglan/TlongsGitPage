@@ -1,7 +1,15 @@
 ---
 title: 归档
-layout: archives
+type: blog
+series: []
+tags: []
+categories: []
+draft: false
+date: 2026-05-06
+lastmod: 2026-05-07
+# 其他配置字段
 toc: false
+layout: archives
 ---
 
 <!-- 
@@ -15,3 +23,8 @@ toc: false
 
 
 这是归档页面
+
+
+
+{{< list-by-taxonomy taxonomy="series" terms="归档" match="any" >}}
+

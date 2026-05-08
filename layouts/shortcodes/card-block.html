@@ -1,0 +1,18 @@
+{{ $icon := .Get "icon" }}
+{{ $title := .Get "title" }}
+{{ $attributes := .Get "attributes" | default "" }}
+{{ $titleClass := .Get "titleClass" }}
+{{ $inner := .Inner | .Page.RenderString }}
+
+{{ partial "card-block-base.html" (dict 
+    "icon" $icon
+    "title" $title
+    "attributes" $attributes
+    "titleClass" $titleClass
+    "inner" $inner
+    "Page" .Page
+) }}
+
+
+
+

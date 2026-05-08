@@ -104,7 +104,7 @@ menu:
       parent: content-series
       params:
         type: link
-        icon: briefcase
+        icon: library
     - identifier: archives
       name: Archives
       pageRef: /archives
@@ -154,9 +154,13 @@ menu:
         icon: Bilibili
 
 
+
+enableGitInfo: true
+
+
 # 相关配置参数
 params:
-
+  
   # 设置徽标内容以及跳转页面
   navbar:
     displayTitle: true
@@ -176,13 +180,36 @@ params:
     enable: true
     base: "https://github.com/imfing/hextra-starter-template/edit/main/content"
   
+
+
+  page:
+    width: full
+    contextMenu:
+      enable: true
+
+
+  blog:
+    list:
+      displayTags: true
+  toc:
+    displayTags: true
+
   # 文档信息展示
   ui:
     categoryLabel: "分类"
     tagLabel: "标签"
     dateLabel: "发布时间"
     lastmodLabel: "更新时间"
-  dateFormat: "2006-01-02"   # 默认即可
+  
+  dateFormat: "2006-01-02"   # 默认即可，支持"2006年1月2日"
+
+  # 显示最后修改日期
+  displayUpdatedDate: true
+  # 显示最后修改的作者
+  displayUpdatedAuthor: true
+  
+
+
   
   # 代码块复制按钮
   highlight:
@@ -208,8 +235,8 @@ params:
 
   # 设置归档的默认目录和日期格式，即按时间线顺序查看
   archives:
-    section: docs
-    dateFormat: "Jan 02"
+    section: blog
+    dateFormat: "May 02"
 
 
 # 在行内使用短代码显示图标，例如 {{< icon "github" >}}
