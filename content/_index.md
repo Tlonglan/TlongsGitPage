@@ -15,7 +15,7 @@ toc: false
 <br>
 <br>
 <br>
-{{< hextra/hero-container image="images/logo.svg"  imageTitle="蓝天龙的小站" >}}
+{{< hextra/hero-container  imageTitle="蓝天龙的小站" >}}
 
 {{< hextra/hero-headline >}}
 蓝天龙的小站&nbsp;<br class="hx:sm:block hx:hidden" />
@@ -36,21 +36,18 @@ toc: false
 {{< hextra/hero-badge >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-primary-400"></div>
   <span>Free</span>
-  {{< icon name="arrow-circle-right" attributes="height=14" >}}
 {{< /hextra/hero-badge >}}
 
 
 {{< hextra/hero-badge >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-primary-400"></div>
   <span>open</span>
-  {{< icon name="arrow-circle-right" attributes="height=14" >}}
 {{< /hextra/hero-badge >}}
 
 
 {{< hextra/hero-badge >}}
   <div class="hx:w-2 hx:h-2 hx:rounded-full hx:bg-primary-400"></div>
   <span>source</span>
-  {{< icon name="arrow-circle-right" attributes="height=14" >}}
 {{< /hextra/hero-badge >}}
 
 <br>
@@ -91,6 +88,7 @@ toc: false
 
 
 <br>
+
 {{< cards >}}
 {{< card link="/blog" title="博客" icon="user" >}}
 {{< card link="/greatresource/my-utils" title="自用小工具" icon="briefcase" >}}
@@ -102,11 +100,14 @@ toc: false
 
 
 ## 精选内容
+
+<br>
+
 {{< list-by-taxonomy taxonomy="series" terms="精选内容" match="any" >}}
 
 
 
 ## 更多信息
 
-更多信息请查看 [Hextra主题的github仓库](https://imfing.github.io/hextra) 以及 [Hextra主题的帮助文档](https://imfing.github.io/hextra/zh-cn/docs/getting-started/)
+更多信息请查看[Hextra主题的github仓库](https://github.com/imfing/hextra) 以及 [Hextra主题的帮助文档](https://imfing.github.io/hextra/zh-cn/docs/getting-started/)
 

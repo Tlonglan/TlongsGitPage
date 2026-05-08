@@ -1,0 +1,160 @@
+{{- $debug := .Get "debug" | default "false" -}}
+{{- if eq $debug "true" }}{{ warnf "[timeline] 开始处理" }}{{ end -}}
+
+{{- $sectionsRaw := .Get "sections" | default "" -}}
+{{- $categoriesRaw := .Get "categories" | default "" -}}
+{{- $tagsRaw := .Get "tags" | default "" -}}
+{{- $seriesRaw := .Get "series" | default "" -}}
+{{- $limit := .Get "limit" | default -1 | int -}}
+{{- $order := .Get "order" | default "desc" -}}
+
+{{- if eq $debug "true" }}{{ warnf "[timeline] 参数: sections=%q, categories=%q, tags=%q, series=%q, limit=%d, order=%s" $sectionsRaw $categoriesRaw $tagsRaw $seriesRaw $limit $order }}{{ end -}}
+
+{{- /* 收集所有页面 */ -}}
+{{- $pages := site.RegularPages -}}
+{{- if eq $debug "true" }}{{ warnf "[timeline] 总页面数: %d" (len $pages) }}{{ end -}}
+
+{{- /* 按 sections 或子路径过滤 */ -}}
+{{- if ne $sectionsRaw "" -}}
+  {{- $sectionsList := split $sectionsRaw "," -}}
+  {{- $filtered := slice -}}
+  {{- range $pages -}}
+    {{- $match := false -}}
+    {{- $section := .Section -}}
+    {{- $rel := .RelPermalink -}}
+    {{- range $sectionsList -}}
+      {{- $pattern := trim . " " -}}
+      {{- if strings.Contains $pattern "/" -}}
+        {{- /* 子路径匹配：检查 .RelPermalink 是否以 /pattern/ 开头 */ -}}
+        {{- $prefix := print "/" $pattern "/" -}}
+        {{- if hasPrefix $rel $prefix -}}
+          {{- $match = true -}}
+        {{- end -}}
+      {{- else -}}
+        {{- /* 顶层 section 匹配 */ -}}
+        {{- if eq $section $pattern -}}
+          {{- $match = true -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $match -}}
+      {{- $filtered = $filtered | append . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $pages = $filtered -}}
+  {{- if eq $debug "true" }}{{ warnf "[timeline] 按 sections/subpaths 过滤后: %d" (len $pages) }}{{ end -}}
+{{- end -}}
+
+{{- /* 按 categories 过滤 */ -}}
+{{- if ne $categoriesRaw "" -}}
+  {{- $categoriesList := split $categoriesRaw "," -}}
+  {{- $filtered := slice -}}
+  {{- range $pages -}}
+    {{- $pageCats := .Params.categories | default slice -}}
+    {{- $match := false -}}
+    {{- range $categoriesList -}}
+      {{- if in $pageCats (. | trim) -}}{{- $match = true -}}{{- end -}}
+    {{- end -}}
+    {{- if $match -}}{{- $filtered = $filtered | append . -}}{{- end -}}
+  {{- end -}}
+  {{- $pages = $filtered -}}
+  {{- if eq $debug "true" }}{{ warnf "[timeline] 按 categories 过滤后: %d" (len $pages) }}{{ end -}}
+{{- end -}}
+
+{{- /* 按 tags 过滤（类似）*/ -}}
+{{- if ne $tagsRaw "" -}}
+  {{- $tagsList := split $tagsRaw "," -}}
+  {{- $filtered := slice -}}
+  {{- range $pages -}}
+    {{- $pageTags := .Params.tags | default slice -}}
+    {{- $match := false -}}
+    {{- range $tagsList -}}
+      {{- if in $pageTags (. | trim) -}}{{- $match = true -}}{{- end -}}
+    {{- end -}}
+    {{- if $match -}}{{- $filtered = $filtered | append . -}}{{- end -}}
+  {{- end -}}
+  {{- $pages = $filtered -}}
+  {{- if eq $debug "true" }}{{ warnf "[timeline] 按 tags 过滤后: %d" (len $pages) }}{{ end -}}
+{{- end -}}
+
+{{- /* 按 series 过滤（类似）*/ -}}
+{{- if ne $seriesRaw "" -}}
+  {{- $seriesList := split $seriesRaw "," -}}
+  {{- $filtered := slice -}}
+  {{- range $pages -}}
+    {{- $pageSeries := .Params.series | default slice -}}
+    {{- $match := false -}}
+    {{- range $seriesList -}}
+      {{- if in $pageSeries (. | trim) -}}{{- $match = true -}}{{- end -}}
+    {{- end -}}
+    {{- if $match -}}{{- $filtered = $filtered | append . -}}{{- end -}}
+  {{- end -}}
+  {{- $pages = $filtered -}}
+  {{- if eq $debug "true" }}{{ warnf "[timeline] 按 series 过滤后: %d" (len $pages) }}{{ end -}}
+{{- end -}}
+
+{{- /* 移除无日期的页面 */ -}}
+{{- $pages = where $pages "Date" "ne" nil -}}
+{{- if eq $debug "true" }}{{ warnf "[timeline] 移除无日期后: %d" (len $pages) }}{{ end -}}
+
+{{- /* 排序 */ -}}
+{{- if eq $order "asc" -}}
+  {{- $pages = sort $pages "Date" "asc" -}}
+{{- else -}}
+  {{- $pages = sort $pages "Date" "desc" -}}
+{{- end -}}
+
+{{- /* 限制数量 */ -}}
+{{- if gt $limit 0 -}}
+  {{- $pages = first $limit $pages -}}
+{{- end -}}
+
+
+{{- /* 分组与渲染 */ -}}
+{{- if $pages -}}
+  {{- /* 按年份分组 */ -}}
+  {{- $yearGroups := dict -}}
+  {{- range $pages -}}
+    {{- $year := .Date.Format "2006" -}}
+    {{- $group := index $yearGroups $year | default slice -}}
+    {{- $yearGroups = merge $yearGroups (dict $year ($group | append .)) -}}
+  {{- end -}}
+
+  {{- /* 年份排序 */ -}}
+  {{- $years := slice -}}
+  {{- range $year, $_ := $yearGroups -}}{{- $years = $years | append $year -}}{{- end -}}
+  {{- if eq $order "asc" -}}
+    {{- $years = sort $years -}}
+  {{- else -}}
+    {{- $years = sort $years "" "desc" -}}
+  {{- end -}}
+
+  {{- /* 日期格式（可改为 "Jan 02" 或通过参数传入） */ -}}
+  {{- $dateFormat := "1月2日" -}}
+
+  <div class="hx:mt-4">
+    {{- range $years -}}
+      {{- $articles := index $yearGroups . -}}
+      <h2 class="hx:mt-6 hx:mb-4 hx:text-2xl hx:font-bold hx:text-slate-900 dark:hx:text-slate-100">{{ . }}</h2>
+      <div class="hextra-archive-timeline hx:ml-2 hx:pl-6 hx:mb-8">
+        {{- range $articles -}}
+          <div class="hx:flex hx:items-baseline hx:gap-4 hx:py-2">
+            <time class="hx:shrink-0 hx:text-sm hx:tabular-nums hx:text-gray-500 dark:hx:text-gray-400" datetime="{{ .Date.Format "2006-01-02" }}">
+              {{- .Date.Format $dateFormat -}}
+            </time>
+            <div>
+              <a href="{{ .RelPermalink }}" class="hx:font-medium hx:text-gray-700 dark:hx:text-gray-300 hx:transition-colors hx:duration-150 hover:hx:text-primary-600 dark:hover:hx:text-primary-400">
+                {{- .Title -}}
+              </a>
+              {{- with .Params.tags -}}
+                <span class="hx:text-xs hx:leading-7">{{ partial "tags.html" (dict "context" $) }}</span>
+              {{- end -}}
+            </div>
+          </div>
+        {{- end -}}
+      </div>
+    {{- end -}}
+  </div>
+{{- else -}}
+  <p class="hx:text-gray-500 dark:hx:text-gray-400">⚠️ 没有找到符合条件的文章。</p>
+{{- end -}}

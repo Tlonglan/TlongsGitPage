@@ -1,6 +1,6 @@
 ---
 title: 归档
-type: blog
+type: deafult
 series: []
 tags: []
 categories: []
@@ -9,7 +9,6 @@ date: 2026-05-06
 lastmod: 2026-05-07
 # 其他配置字段
 toc: false
-layout: archives
 ---
 
 <!-- 
@@ -24,7 +23,7 @@ layout: archives
 
 这是归档页面
 
+<br>
 
 
 {{< list-by-taxonomy taxonomy="series" terms="归档" match="any" >}}
-

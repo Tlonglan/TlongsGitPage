@@ -180,7 +180,10 @@ params:
     enable: true
     base: "https://github.com/imfing/hextra-starter-template/edit/main/content"
   
-
+  
+  hextra:
+    css:
+      - /css/custom.css
 
   page:
     width: full
@@ -236,7 +239,8 @@ params:
   # 设置归档的默认目录和日期格式，即按时间线顺序查看
   archives:
     section: blog
-    dateFormat: "May 02"
+    # dateFormat: "May 02"
+    dateFormat: "1月2日"
 
 
 # 在行内使用短代码显示图标，例如 {{< icon "github" >}}

@@ -1,0 +1,9 @@
+/* 覆盖时间线中的链接颜色，使其默认为灰色，悬浮时变为主题色 */
+.hextra-archive-timeline a {
+  color: #4b5563 !important;         /* 强制灰色，去除蓝色 */
+  text-decoration: none !important;  /* 移除下划线 */
+}
+.hextra-archive-timeline a:hover {
+  color: var(--hextra-primary-600) !important; /* 悬浮时使用主题蓝色 */
+  text-decoration: underline;                  /* 悬浮时显示下划线（可选） */
+}

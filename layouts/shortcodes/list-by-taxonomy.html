@@ -9,7 +9,8 @@
 {{- $match := .Get "match" | default "any" -}}
 {{- $excludeParam := .Get "exclude" -}}
 
-{{- $pages := site.RegularPages -}}
+<!-- {{- $pages := site.RegularPages -}} -->
+{{- $pages := site.AllPages -}}
 {{- $terms := split $termsParam "," -}}
 {{- $excludeTerms := slice -}}
 {{- if $excludeParam -}}
@@ -53,16 +54,21 @@
 {{- end -}}
 
 {{- if $filtered -}}
-    <ul class="post-list">
-        {{- range $filtered.ByTitle -}}
-            <li>
-                <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-                {{- with .Date -}}
-                    <span class="post-date"> ({{ .Format "2006-01-02" }})</span>
-                {{- end -}}
-            </li>
-        {{- end -}}
-    </ul>
+    <div class="hextra-archive-timeline">
+        <ul class="hx:ml-1 hx:pl-1 hx:space-y-2">
+            {{- range $filtered.ByTitle -}}
+                <li class="hx:flex hx:items-baseline">
+                    <a href="{{ .RelPermalink }}" 
+                       class="hx:font-bold hx:text-gray-700 dark:hx:text-gray-300 hover:hx:text-primary-600 dark:hover:hx:text-primary-400 hx:transition-colors hx:duration-150">
+                        {{- .LinkTitle -}}
+                    </a>
+                    {{- with .Date -}}
+                        <span class="hx:text-xs hx:text-gray-500 dark:hx:text-gray-400 hx:ml-2">({{ .Format "2006-01-02" }})</span>
+                    {{- end -}}
+                </li>
+            {{- end -}}
+        </ul>
+    </div>
 {{- else -}}
-    <p>⚠️ 没有找到符合条件的文章。</p>
+    <p class="hx:text-gray-500">⚠️ 没有找到符合条件的文章。</p>
 {{- end -}}
