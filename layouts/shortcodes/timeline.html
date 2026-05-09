@@ -7,14 +7,15 @@
 {{- $seriesRaw := .Get "series" | default "" -}}
 {{- $limit := .Get "limit" | default -1 | int -}}
 {{- $order := .Get "order" | default "desc" -}}
+{{- $pageSize := .Get "pageSize" | default 20 | int -}}
 
-{{- if eq $debug "true" }}{{ warnf "[timeline] 参数: sections=%q, categories=%q, tags=%q, series=%q, limit=%d, order=%s" $sectionsRaw $categoriesRaw $tagsRaw $seriesRaw $limit $order }}{{ end -}}
+{{- if eq $debug "true" }}{{ warnf "[timeline] 参数: sections=%q, categories=%q, tags=%q, series=%q, limit=%d, order=%s, pageSize=%d" $sectionsRaw $categoriesRaw $tagsRaw $seriesRaw $limit $order $pageSize }}{{ end -}}
 
 {{- /* 收集所有页面 */ -}}
 {{- $pages := site.RegularPages -}}
 {{- if eq $debug "true" }}{{ warnf "[timeline] 总页面数: %d" (len $pages) }}{{ end -}}
 
-{{- /* 按 sections 或子路径过滤 */ -}}
+{{- /* 按 sections 或子路径过滤（改进版） */ -}}
 {{- if ne $sectionsRaw "" -}}
   {{- $sectionsList := split $sectionsRaw "," -}}
   {{- $filtered := slice -}}
@@ -25,9 +26,10 @@
     {{- range $sectionsList -}}
       {{- $pattern := trim . " " -}}
       {{- if strings.Contains $pattern "/" -}}
-        {{- /* 子路径匹配：检查 .RelPermalink 是否以 /pattern/ 开头 */ -}}
-        {{- $prefix := print "/" $pattern "/" -}}
-        {{- if hasPrefix $rel $prefix -}}
+        {{- /* 子路径匹配：同时尝试 /pattern/ 和 /pattern 作为前缀 */ -}}
+        {{- $prefixWithSlash := print "/" $pattern "/" -}}
+        {{- $prefixWithoutSlash := print "/" $pattern -}}
+        {{- if or (hasPrefix $rel $prefixWithSlash) (hasPrefix $rel $prefixWithoutSlash) -}}
           {{- $match = true -}}
         {{- end -}}
       {{- else -}}
@@ -53,7 +55,7 @@
     {{- $pageCats := .Params.categories | default slice -}}
     {{- $match := false -}}
     {{- range $categoriesList -}}
-      {{- if in $pageCats (. | trim) -}}{{- $match = true -}}{{- end -}}
+      {{- if in $pageCats (trim . " ") -}}{{- $match = true -}}{{- end -}}
     {{- end -}}
     {{- if $match -}}{{- $filtered = $filtered | append . -}}{{- end -}}
   {{- end -}}
@@ -61,7 +63,7 @@
   {{- if eq $debug "true" }}{{ warnf "[timeline] 按 categories 过滤后: %d" (len $pages) }}{{ end -}}
 {{- end -}}
 
-{{- /* 按 tags 过滤（类似）*/ -}}
+{{- /* 按 tags 过滤 */ -}}
 {{- if ne $tagsRaw "" -}}
   {{- $tagsList := split $tagsRaw "," -}}
   {{- $filtered := slice -}}
@@ -69,7 +71,7 @@
     {{- $pageTags := .Params.tags | default slice -}}
     {{- $match := false -}}
     {{- range $tagsList -}}
-      {{- if in $pageTags (. | trim) -}}{{- $match = true -}}{{- end -}}
+      {{- if in $pageTags (trim . " ") -}}{{- $match = true -}}{{- end -}}
     {{- end -}}
     {{- if $match -}}{{- $filtered = $filtered | append . -}}{{- end -}}
   {{- end -}}
@@ -77,7 +79,7 @@
   {{- if eq $debug "true" }}{{ warnf "[timeline] 按 tags 过滤后: %d" (len $pages) }}{{ end -}}
 {{- end -}}
 
-{{- /* 按 series 过滤（类似）*/ -}}
+{{- /* 按 series 过滤 */ -}}
 {{- if ne $seriesRaw "" -}}
   {{- $seriesList := split $seriesRaw "," -}}
   {{- $filtered := slice -}}
@@ -85,7 +87,7 @@
     {{- $pageSeries := .Params.series | default slice -}}
     {{- $match := false -}}
     {{- range $seriesList -}}
-      {{- if in $pageSeries (. | trim) -}}{{- $match = true -}}{{- end -}}
+      {{- if in $pageSeries (trim . " ") -}}{{- $match = true -}}{{- end -}}
     {{- end -}}
     {{- if $match -}}{{- $filtered = $filtered | append . -}}{{- end -}}
   {{- end -}}
@@ -97,22 +99,39 @@
 {{- $pages = where $pages "Date" "ne" nil -}}
 {{- if eq $debug "true" }}{{ warnf "[timeline] 移除无日期后: %d" (len $pages) }}{{ end -}}
 
-{{- /* 排序 */ -}}
+{{- /* 排序（按日期） */ -}}
 {{- if eq $order "asc" -}}
   {{- $pages = sort $pages "Date" "asc" -}}
 {{- else -}}
   {{- $pages = sort $pages "Date" "desc" -}}
 {{- end -}}
 
-{{- /* 限制数量 */ -}}
+{{- /* 限制总数（可选） */ -}}
 {{- if gt $limit 0 -}}
   {{- $pages = first $limit $pages -}}
 {{- end -}}
 
 
 {{- /* 分组与渲染 */ -}}
+
+{{- if eq $debug "true" }}{{ warnf "[timeline] 开始处理" }}{{ end -}}
+
+{{- $sectionsRaw := .Get "sections" | default "" -}}
+{{- $categoriesRaw := .Get "categories" | default "" -}}
+{{- $tagsRaw := .Get "tags" | default "" -}}
+{{- $seriesRaw := .Get "series" | default "" -}}
+{{- $limit := .Get "limit" | default -1 | int -}}
+{{- $order := .Get "order" | default "desc" -}}
+{{- $pageSize := .Get "pageSize" | default 20 | int -}}   {{/* 新增：每页文章数量 */}}
+
+{{- if eq $debug "true" }}{{ warnf "[timeline] 参数: sections=%q, categories=%q, tags=%q, series=%q, limit=%d, order=%s, pageSize=%d" $sectionsRaw $categoriesRaw $tagsRaw $seriesRaw $limit $order $pageSize }}{{ end -}}
+
+
+
+
+
 {{- if $pages -}}
-  {{- /* 按年份分组 */ -}}
+  {{- /* 按年份分组（与原代码相同） */ -}}
   {{- $yearGroups := dict -}}
   {{- range $pages -}}
     {{- $year := .Date.Format "2006" -}}
@@ -120,7 +139,6 @@
     {{- $yearGroups = merge $yearGroups (dict $year ($group | append .)) -}}
   {{- end -}}
 
-  {{- /* 年份排序 */ -}}
   {{- $years := slice -}}
   {{- range $year, $_ := $yearGroups -}}{{- $years = $years | append $year -}}{{- end -}}
   {{- if eq $order "asc" -}}
@@ -129,32 +147,85 @@
     {{- $years = sort $years "" "desc" -}}
   {{- end -}}
 
-  {{- /* 日期格式（可改为 "Jan 02" 或通过参数传入） */ -}}
-  {{- $dateFormat := "1月2日" -}}
+  {{- $dateFormat := "2006年 1月 2日" -}}
 
-  <div class="hx:mt-4">
-    {{- range $years -}}
-      {{- $articles := index $yearGroups . -}}
-      <h2 class="hx:mt-6 hx:mb-4 hx:text-2xl hx:font-bold hx:text-slate-900 dark:hx:text-slate-100">{{ . }}</h2>
-      <div class="hextra-archive-timeline hx:ml-2 hx:pl-6 hx:mb-8">
-        {{- range $articles -}}
-          <div class="hx:flex hx:items-baseline hx:gap-4 hx:py-2">
-            <time class="hx:shrink-0 hx:text-sm hx:tabular-nums hx:text-gray-500 dark:hx:text-gray-400" datetime="{{ .Date.Format "2006-01-02" }}">
-              {{- .Date.Format $dateFormat -}}
-            </time>
-            <div>
-              <a href="{{ .RelPermalink }}" class="hx:font-medium hx:text-gray-700 dark:hx:text-gray-300 hx:transition-colors hx:duration-150 hover:hx:text-primary-600 dark:hover:hx:text-primary-400">
-                {{- .Title -}}
-              </a>
-              {{- with .Params.tags -}}
-                <span class="hx:text-xs hx:leading-7">{{ partial "tags.html" (dict "context" $) }}</span>
-              {{- end -}}
-            </div>
+  {{- /* 构建扁平列表：年份标题作为独立元素 */ -}}
+  {{- $allEntries := slice -}}
+  {{- range $years -}}
+    {{- $yearTitle := . -}}
+    {{- $articles := index $yearGroups $yearTitle -}}
+    {{- $allEntries = $allEntries | append (dict "type" "year" "title" $yearTitle) -}}
+    {{- range $articles -}}
+      {{- $allEntries = $allEntries | append (dict "type" "article" "title" .Title "url" .RelPermalink "date" (.Date.Format $dateFormat) "tags" .Params.tags) -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $total := len $allEntries -}}
+  {{- $totalPages := math.Ceil (div (float $total) (float $pageSize)) -}}
+
+  <div class="hextra-archive-timeline hx:ml-2 hx:pl-6">
+    <div id="timeline-paginator-{{ .Ordinal }}" class="timeline-paginator" data-page-size="{{ $pageSize }}">
+      <div class="timeline-entries-container">
+        {{- range $idx, $entry := $allEntries -}}
+          <div class="timeline-entry" data-index="{{ $idx }}" style="{{ if ge $idx $pageSize }}display: none;{{ end }}">
+            {{- if eq $entry.type "year" -}}
+              <h2 class="hx:mt-6 hx:mb-4 hx:text-2xl hx:font-bold hx:text-slate-900 dark:hx:text-slate-100">{{ $entry.title }}</h2>
+            {{- else -}}
+              <div class="hx:flex hx:items-baseline hx:gap-4 hx:py-2">
+                <time class="hx:shrink-0 hx:text-sm hx:tabular-nums hx:text-gray-500 dark:hx:text-gray-400">{{ $entry.date }}</time>
+                <div>
+                  <a href="{{ $entry.url }}" class="hx:font-medium hx:text-gray-700 dark:hx:text-gray-300 hx:transition-colors hx:duration-150 hover:hx:text-primary-600 dark:hover:hx:text-primary-400">{{ $entry.title }}</a>
+                  {{- with $entry.tags -}}
+                    <span class="hx:text-xs hx:leading-7">{{ partial "tags.html" (dict "context" $) }}</span>
+                  {{- end -}}
+                </div>
+              </div>
+            {{- end -}}
           </div>
         {{- end -}}
       </div>
-    {{- end -}}
+      <div class="hx:mt-8 hx:flex hx:justify-center hx:gap-2">
+        <button class="timeline-prev hx:px-3 hx:py-1 hx:rounded hx:border hx:bg-gray-100 dark:hx:bg-gray-800 disabled:hx:opacity-50" disabled>上一页</button>
+        <span class="timeline-page-info hx:px-3 hx:py-1">1 / {{ $totalPages }}</span>
+        <button class="timeline-next hx:px-3 hx:py-1 hx:rounded hx:border hx:bg-gray-100 dark:hx:bg-gray-800" {{ if eq $totalPages 1 }}disabled{{ end }}>下一页</button>
+      </div>
+    </div>
   </div>
+
+  <script>
+    (function() {
+      var container = document.getElementById('timeline-paginator-{{ .Ordinal }}');
+      if (!container) return;
+      var pageSize = parseInt(container.dataset.pageSize, 10);
+      var entries = container.querySelectorAll('.timeline-entry');
+      var totalEntries = entries.length;
+      var totalPages = Math.ceil(totalEntries / pageSize);
+      var currentPage = 1;
+
+      function showPage(page) {
+        var start = (page - 1) * pageSize;
+        var end = start + pageSize;
+        for (var i = 0; i < totalEntries; i++) {
+          entries[i].style.display = (i >= start && i < end) ? '' : 'none';
+        }
+        container.querySelector('.timeline-page-info').innerText = page + ' / ' + totalPages;
+        var prevBtn = container.querySelector('.timeline-prev');
+        var nextBtn = container.querySelector('.timeline-next');
+        if (prevBtn) prevBtn.disabled = (page === 1);
+        if (nextBtn) nextBtn.disabled = (page === totalPages);
+        currentPage = page;
+      }
+
+      container.querySelector('.timeline-prev').addEventListener('click', function() {
+        if (currentPage > 1) showPage(currentPage - 1);
+      });
+      container.querySelector('.timeline-next').addEventListener('click', function() {
+        if (currentPage < totalPages) showPage(currentPage + 1);
+      });
+
+      showPage(1);
+    })();
+  </script>
 {{- else -}}
   <p class="hx:text-gray-500 dark:hx:text-gray-400">⚠️ 没有找到符合条件的文章。</p>
 {{- end -}}

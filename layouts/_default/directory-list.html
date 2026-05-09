@@ -1,0 +1,157 @@
+{{ define "main" }}
+  {{- /* 读取原生参数 */ -}}
+  {{- $showBreadcrumb := .Params.breadcrumbs | default true -}}
+  {{- $showToc := .Params.toc | default true -}}
+  {{- $showSidebar := and (.Params.sidebar.hide) (not .Params.sidebar.exclude) -}}
+
+  {{- /* 自定义阈值 */ -}}
+  {{- $maxPrimary := .Params.primaryThreshold | default 10 -}}      {{/* 一级目录数量上限 */ -}}
+  {{- $maxSecondary := .Params.secondaryThreshold | default 20 -}}  {{/* 单个一级目录下二级数量上限 */ -}}
+
+  <div class="hx:mx-auto hx:flex hextra-max-page-width">
+    {{- if $showSidebar }}
+      {{ partial "sidebar.html" (dict "context" . "disableSidebar" false "displayPlaceholder" false) }}
+    {{ else }}
+      <div class="hx:max-xl:hidden hx:h-0 hx:w-64 hx:shrink-0"></div>
+    {{ end }}
+
+    {{- if $showToc }}
+      {{ partial "toc.html" . }}
+    {{ else }}
+      <div class="hx:max-xl:hidden hx:h-0 hx:w-64 hx:shrink-0"></div>
+    {{- end }}
+
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-4 hx:md:px-12">
+        {{- if $showBreadcrumb }}
+          {{ partial "breadcrumb.html" (dict "page" . "enable" true) }}
+        {{ end -}}
+
+        {{ if .Title }}
+          <h1 class="hx:text-center hx:mt-2 hx:text-4xl hx:font-bold hx:tracking-tight hx:text-slate-900 hx:dark:text-slate-100">{{ .Title }}</h1>
+        {{ end }}
+
+        <div class="content">
+          {{ .Content }}
+        </div>
+
+        {{- /* 获取所有一级子页面 */ -}}
+        {{- $allDirectChildren := .Pages -}}
+        {{- $totalPrimary := len $allDirectChildren -}}
+
+        {{- /* 检查每个一级目录下的二级数量是否超过阈值 */ -}}
+        {{- $exceedSecondary := false -}}
+        {{- $exceedItems := slice -}}
+        {{- range $allDirectChildren -}}
+          {{- $secondaryCount := len .Pages -}}
+          {{- if gt $secondaryCount $maxSecondary -}}
+            {{- $exceedSecondary = true -}}
+            {{- $exceedItems = $exceedItems | append (dict "title" .Title "count" $secondaryCount "link" .RelPermalink) -}}
+          {{- end -}}
+        {{- end -}}
+
+        {{- /* 是否需要简化显示（一级总数超限 或 存在二级超限） */ -}}
+        {{- $simplify := or (gt $totalPrimary $maxPrimary) $exceedSecondary -}}
+
+        {{- if $simplify -}}
+          {{- /* 分页参数：每页显示的一级目录数量 */ -}}
+          {{- $pageSize := .Params.paginateSize | default 10 -}}
+          {{- $paginator := .Paginate $allDirectChildren $pageSize -}}
+
+          {{- /* 提示信息 */ -}}
+          <div class="hx:bg-blue-50 dark:hx:bg-blue-900/20 hx:border-l-4 hx:border-blue-500 hx:p-4 hx:my-6">
+            <div class="hx:flex">
+              <div class="hx:flex-shrink-0">
+                <svg class="hx:h-5 hx:w-5 hx:text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="hx:ml-3">
+                <p class="hx:text-sm hx:text-blue-700 dark:hx:text-blue-400">
+                  {{- if gt $totalPrimary $maxPrimary -}}
+                    当前共有 {{ $totalPrimary }} 个专栏，为优化浏览体验，此处仅显示第 {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }} 页，不展示子文章条目。请点击下方专栏标题进入查看详细内容。
+                  {{- else if $exceedSecondary -}}
+                    以下专栏的文章数量较多，为避免页面过长，此处仅显示专栏列表，不展示其子文章。建议您将这些专栏进一步拆分或使用分页：
+                    {{ range $exceedItems }}
+                      <a href="{{ .link }}" class="hx:underline">{{ .title }}</a> ({{ .count }}篇)
+                    {{ end }}。
+                  {{- end -}}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {{- /* 显示分页后的一级目录列表 */ -}}
+          <div class="hx:mt-8 hx:space-y-6">
+            {{- range $paginator.Pages.ByTitle -}}
+              <div class="hx:border-b hx:pb-4">
+                <h2 class="hx:text-xl hx:font-semibold">
+                  <a href="{{ .RelPermalink }}" class="hover:hx:underline">{{ .Title }}</a>
+                </h2>
+                {{- if .Description }}
+                  <p class="hx:text-sm hx:text-gray-500 hx:mt-1">{{ .Description }}</p>
+                {{- end }}
+              </div>
+            {{- end -}}
+          </div>
+
+          {{- /* 分页导航 */ -}}
+          {{- if gt $paginator.TotalPages 1 -}}
+            <div class="hx:mt-8 hx:flex hx:justify-center">
+              {{ partial "components/blog-pager.html" $paginator }}
+            </div>
+          {{- end -}}
+
+        {{- else -}}
+          {{- /* 正常展示两级结构（无分页）*/ -}}
+          {{- $directChildren := $allDirectChildren -}}
+          {{- if .Params.orderByDateDesc -}}
+            {{- $directChildren = sort $directChildren "Date" "desc" -}}
+          {{- else -}}
+            {{- $directChildren = $directChildren.ByTitle -}}
+          {{- end -}}
+
+          {{- if $directChildren -}}
+            <div class="hx:mt-8">
+              {{- range $index, $child := $directChildren -}}
+                {{- $isLast := eq $index (sub (len $directChildren) 1) -}}
+                <div class="hx:border-b hx:pb-6 {{ if not $isLast }}hx:mb-6{{ end }}">
+                  <div class="hx:mb-0">
+                    <h2 class="hx:text-xl hx:font-semibold">
+                      <a href="{{ $child.RelPermalink }}" class="hover:hx:underline">{{ $child.Title }}</a>
+                    </h2>
+                    {{- if $child.Description }}
+                      <p class="hx:text-sm hx:text-gray-500 hx:mt-1">{{ $child.Description }}</p>
+                    {{- end }}
+                  </div>
+
+                  {{- $grandChildren := $child.Pages -}}
+                  {{- if $grandChildren -}}
+                    <div class="hx:ml-8 hx:border-l-2 hx:pl-6">
+                      {{- $sortedGrand := $grandChildren -}}
+                      {{- if $.Params.orderByDateDesc -}}
+                        {{- $sortedGrand = sort $grandChildren "Date" "desc" -}}
+                      {{- else -}}
+                        {{- $sortedGrand = $grandChildren.ByTitle -}}
+                      {{- end -}}
+                      {{- range $sortedGrand -}}
+                        <div class="hx:py-1">
+                          <a href="{{ .RelPermalink }}" class="hx:text-gray-700 dark:hx:text-gray-300 hover:hx:underline">{{ .Title }}</a>
+                          {{- if .Date }}
+                            <span class="hx:text-xs hx:text-gray-500 hx:ml-2">({{ .Date.Format "2006-01-02" }})</span>
+                          {{- end }}
+                        </div>
+                      {{- end -}}
+                    </div>
+                  {{- end -}}
+                </div>
+              {{- end -}}
+            </div>
+          {{- else -}}
+            <p class="hx:text-gray-500 hx:mt-8">该目录下暂无内容。</p>
+          {{- end -}}
+        {{- end -}}
+      </main>
+    </article>
+  </div>
+{{ end }}

@@ -1,5 +1,6 @@
 ---
 title: 自用工具
+type: directory-list
 ---
 
 

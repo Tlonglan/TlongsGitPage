@@ -59,7 +59,6 @@ function easeAndWizz() {
 ## 路径循环
 
 ```javascript
-
 // 方式1
 valueAtTime(time % key(numKeys).time)
 
@@ -74,7 +73,7 @@ valueAtTime(t);
 ## 降低random频率
 
 ```javascript
-
+// 核心思想是从当前属性的取值中抽取数值
 posterizeTime(1) /*括号里表示帧速率*/
 Math.round(random(100))
 
@@ -87,10 +86,9 @@ Math.round(random(100))
 /*
 
 举例：
+字幕文件：字幕0602.csv，文件首行为当前字幕文件的名字，例如字幕0602，然后一句台词一行
+配音文件，
 字幕合成名字为：字幕0602
-字幕
-字幕0602.csv
-配音
 
 */
 

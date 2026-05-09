@@ -1,6 +1,5 @@
 ---
 title: 归档
-type: deafult
 series: []
 tags: []
 categories: []
@@ -9,6 +8,7 @@ date: 2026-05-06
 lastmod: 2026-05-07
 # 其他配置字段
 toc: false
+weight: 7
 ---
 
 <!-- 
@@ -21,7 +21,7 @@ toc: false
  -->
 
 
-这是归档页面
+这里是已经归档（即使用时间线形式查看所有文档）的页面
 
 <br>
 

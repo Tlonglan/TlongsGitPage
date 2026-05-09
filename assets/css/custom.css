@@ -1,9 +1,27 @@
-/* 覆盖时间线中的链接颜色，使其默认为灰色，悬浮时变为主题色 */
+/* 时间轴短代码内的链接样式 */
 .hextra-archive-timeline a {
-  color: #4b5563 !important;         /* 强制灰色，去除蓝色 */
-  text-decoration: none !important;  /* 移除下划线 */
+  color: #4b5563 !important;
+  text-decoration: none !important;
 }
 .hextra-archive-timeline a:hover {
-  color: var(--hextra-primary-600) !important; /* 悬浮时使用主题蓝色 */
-  text-decoration: underline;                  /* 悬浮时显示下划线（可选） */
+  color: var(--hextra-primary-600) !important;
+  text-decoration: underline;
+}
+
+
+
+
+
+
+/* 正常屏幕下，两个子元素都显示 */
+.hero-container > * {
+  flex: 0 0 auto;
+}
+
+/* 手机端（宽度小于768px）隐藏 Logo，并且标题可占满整行 */
+@media (max-width: 767px) {
+  .hero-logo {
+    display: none;
+  }
+  
 }

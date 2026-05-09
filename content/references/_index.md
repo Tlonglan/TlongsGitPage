@@ -1,6 +1,7 @@
 ---
 title: 参考资料
-toc: false
+type: directory-list
+weight: 3
 ---
 
 

@@ -1,9 +1,9 @@
 ---
-title: 演示子文档-1
+title: 演示-Markdown功能
 type: docs
-series: [尝鲜]
+series: [尝鲜, 演示]
 tags: [0-功能测试]
-categories: []
+categories: [Markdown]
 draft: false
 date: 2026-05-06
 lastmod: 2026-05-07
@@ -11,8 +11,8 @@ lastmod: 2026-05-07
 ---
 
 
-## 欢迎来到我的博客!
-这是一个 <font color=green size=5><strong>演示文档</strong></font>, 主要是演示支持的 markdown 功能
+
+这是一个 <font color=green size=5><strong>功能演示文档</strong></font>, 主要是演示当前网站使用Hextra主题支持的功能
 
 This is a **demo** of the theme's *documentation* layout.
 
