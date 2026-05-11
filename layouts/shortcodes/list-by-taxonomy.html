@@ -2,73 +2,101 @@
   用法：
   {{< list-by-taxonomy taxonomy="tags" terms="Hugo,Hextra" match="any" >}}
   {{< list-by-taxonomy taxonomy="categories" terms="技术,前端" match="all" exclude="旧文" >}}
+  {{< list-by-taxonomy paths="blog/travel,blog/year-end" >}}
+  {{< list-by-taxonomy paths="docs" taxonomy="series" terms="教程" match="any" >}}
 */}}
 
-{{- $taxonomy := .Get "taxonomy" | default "tags" -}}
-{{- $termsParam := .Get "terms" -}}
+{{- $taxonomy := .Get "taxonomy" | default "" -}}
+{{- $termsParam := .Get "terms" | default "" -}}
 {{- $match := .Get "match" | default "any" -}}
-{{- $excludeParam := .Get "exclude" -}}
+{{- $excludeParam := .Get "exclude" | default "" -}}
+{{- $pathsParam := .Get "paths" | default "" -}}
 
-<!-- {{- $pages := site.RegularPages -}} -->
 {{- $pages := site.AllPages -}}
-{{- $terms := split $termsParam "," -}}
-{{- $excludeTerms := slice -}}
-{{- if $excludeParam -}}
-    {{- $excludeTerms = split $excludeParam "," -}}
+
+{{- /* 1. 按路径筛选 (如果提供了 paths) */ -}}
+{{- if ne $pathsParam "" -}}
+  {{- $pathList := split $pathsParam "," -}}
+  {{- $filtered := slice -}}
+  {{- range $pages -}}
+    {{- $rel := .RelPermalink -}}
+    {{- $matched := false -}}
+    {{- range $pathList -}}
+      {{- $p := trim . " " -}}
+      {{- $prefix := print "/" $p "/" -}}
+      {{- if hasPrefix $rel $prefix -}}
+        {{- $matched = true -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $matched -}}
+      {{- $filtered = $filtered | append . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $pages = $filtered -}}
 {{- end -}}
 
-{{- $filtered := slice -}}
+{{- /* 2. 按 taxonomy 筛选 (如果提供了 taxonomy 和 terms) */ -}}
+{{- if and $taxonomy $termsParam -}}
+  {{- $terms := split $termsParam "," -}}
+  {{- $excludeTerms := slice -}}
+  {{- if $excludeParam -}}
+    {{- $excludeTerms = split $excludeParam "," -}}
+  {{- end -}}
 
-{{- range $pages -}}
+  {{- $filtered := slice -}}
+  {{- range $pages -}}
     {{- $pageTax := .Param $taxonomy | default slice -}}
     {{- $include := false -}}
 
     {{- if eq $match "all" -}}
-        {{- $include = true -}}
-        {{- range $index, $term := $terms -}}
-            {{- if not (in $pageTax $term) -}}
-                {{- $include = false -}}
-            {{- end -}}
+      {{- $include = true -}}
+      {{- range $terms -}}
+        {{- if not (in $pageTax (trim . " ")) -}}
+          {{- $include = false -}}
         {{- end -}}
+      {{- end -}}
     {{- else -}}
-        {{- range $index, $term := $terms -}}
-            {{- if in $pageTax $term -}}
-                {{- $include = true -}}
-            {{- end -}}
+      {{- range $terms -}}
+        {{- if in $pageTax (trim . " ") -}}
+          {{- $include = true -}}
         {{- end -}}
+      {{- end -}}
     {{- end -}}
 
     {{- if $include -}}
-        {{- if $excludeParam -}}
-            {{- range $index, $term := $excludeTerms -}}
-                {{- if in $pageTax $term -}}
-                    {{- $include = false -}}
-                {{- end -}}
-            {{- end -}}
+      {{- if $excludeParam -}}
+        {{- range $excludeTerms -}}
+          {{- if in $pageTax (trim . " ") -}}
+            {{- $include = false -}}
+          {{- end -}}
         {{- end -}}
+      {{- end -}}
     {{- end -}}
 
     {{- if $include -}}
-        {{- $filtered = $filtered | append . -}}
+      {{- $filtered = $filtered | append . -}}
     {{- end -}}
+  {{- end -}}
+  {{- $pages = $filtered -}}
 {{- end -}}
 
-{{- if $filtered -}}
-    <div class="hextra-archive-timeline">
-        <ul class="hx:ml-1 hx:pl-1 hx:space-y-2">
-            {{- range $filtered.ByTitle -}}
-                <li class="hx:flex hx:items-baseline">
-                    <a href="{{ .RelPermalink }}" 
-                       class="hx:font-bold hx:text-gray-700 dark:hx:text-gray-300 hover:hx:text-primary-600 dark:hover:hx:text-primary-400 hx:transition-colors hx:duration-150">
-                        {{- .LinkTitle -}}
-                    </a>
-                    {{- with .Date -}}
-                        <span class="hx:text-xs hx:text-gray-500 dark:hx:text-gray-400 hx:ml-2">({{ .Format "2006-01-02" }})</span>
-                    {{- end -}}
-                </li>
-            {{- end -}}
-        </ul>
-    </div>
+{{- /* 3. 输出结果 */ -}}
+{{- if $pages -}}
+  <div class="hextra-archive-timeline">
+    <ul class="hx:ml-1 hx:pl-1 hx:space-y-2">
+      {{- range $pages.ByTitle -}}
+        <li class="hx:flex hx:items-baseline">
+          <a href="{{ .RelPermalink }}" 
+             class="hx:font-bold hx:text-gray-700 dark:hx:text-gray-300 hover:hx:text-primary-600 dark:hover:hx:text-primary-400 hx:transition-colors hx:duration-150">
+            {{- .LinkTitle -}}
+          </a>
+          {{- with .Date -}}
+            <span class="hx:text-xs hx:text-gray-500 dark:hx:text-gray-400 hx:ml-2">({{ .Format "2006-01-02" }})</span>
+          {{- end -}}
+        </li>
+      {{- end -}}
+    </ul>
+  </div>
 {{- else -}}
-    <p class="hx:text-gray-500">⚠️ 没有找到符合条件的文章。</p>
+  <p class="hx:text-gray-500">⚠️ 没有找到符合条件的文章。</p>
 {{- end -}}

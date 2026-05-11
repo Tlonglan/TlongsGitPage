@@ -1,5 +1,5 @@
 ---
-title: 演示-Markdown功能
+title: 功能演示-Markdown
 type: docs
 series: [尝鲜, 演示]
 tags: [0-功能测试]
@@ -8,18 +8,24 @@ draft: false
 date: 2026-05-06
 lastmod: 2026-05-07
 # 其他自定义字段
+weight: 5
 ---
 
 
 
-这是一个 <font color=green size=5><strong>功能演示文档</strong></font>, 主要是演示当前网站使用Hextra主题支持的功能
-
-This is a **demo** of the theme's *documentation* layout.
+这是一个 <font color=green size=5><strong>功能演示文档</strong></font>, 主要是演示当前网站使用Hextra主题支持的 markdoen 功能
 
 
-## 功能演示
+
+
+## 基础功能演示
 
 注意，目录只从第二层开始渲染
+###### 最多支持到六级标题
+
+引用
+> This is a **demo** of the theme's *documentation* layout. <cite>[^1]</cite>
+
 
 
 ### 数学公式
@@ -33,9 +39,9 @@ $$
 \end{aligned}
 $$
 
-
 > [!CAUTION] 警告
 > 行间公式不能有空行，也就是禁止下面这样，否则会渲染失败
+> 当然，这是一个提示块（高亮块）演示
 
 ```Katex
 $$
@@ -68,7 +74,7 @@ def fun():
 > [!warning]
 > 但是好可惜，不支持 `Mathematica` 语法高亮
 > 但是，按帮助文档的说法，使用的[语法高亮库chroma](https://github.com/alecthomas/chroma#supported-languages)应该是支持才对的啊
-> <img src="../demo-doc-img/2026-05-06-17-58-47.png" alt="丢失描述" width="100%">
+> <img src="assets/2026-05-06-17-58-47.png" alt="丢失描述" width="80%">
 
 
 
@@ -91,3 +97,7 @@ MyFun[] := Module[{},
   <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=228086186&bvid=BV1ch411L7aL&cid=1111035512&p=1&autoplay=0" frameborder="no" scrolling="no" allowfullscreen="true" sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;">
   </iframe>
 </div>
+
+
+
+[^1]: 可以点击跳回去，并且无论这个备注在源代码中放在哪里，都会被渲染到页面的最底下<br> 但是因为导航栏的遮挡，所以等下跳回去之后记得需要稍微往上挪一下页面，这是体验上的小bug

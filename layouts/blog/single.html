@@ -7,8 +7,6 @@
     <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-4 hx:md:px-12">
       
       {{ partial "breadcrumb.html" (dict "page" . "enable" true) }}
-      
-      <div class="content hx:mx-1"> 
         {{ if .Title }}
         <div
           class="hx:flex hx:flex-col hx:sm:flex-row hx:items-start hx:sm:items-center hx:sm:justify-between hx:gap-4 hx:mt-2">
@@ -71,7 +69,7 @@
           <div>
             <span>【类型】为 : </span>
             {{ range $idx, $tag := . }}
-            <a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}' class="hover:hx:underline">{{ . }}</a>{{ if ne $idx
+            <a href='{{"/tags/" | relLangURL }}{{ . | urlize }}' class="article-meta-links">{{ . }}</a>{{ if ne $idx
             (sub (len $.Params.tags) 1) }}，{{ end }}
             {{ end }}
           </div>
@@ -87,7 +85,7 @@
           <div>
             <span>收录于【系列】: </span>
             {{ range $idx, $ser := . }}
-            <a href='{{ "/series/" | relLangURL }}{{ . | urlize }}' class="hover:hx:underline">{{ . }}</a>{{ if ne $idx
+            <a href='{{"/series/" | relLangURL }}{{ . | urlize }}' class="article-meta-links">{{ . }}</a>{{ if ne $idx
             (sub (len $.Params.series) 1) }}，{{ end }}
             {{ end }}
           </div>
@@ -104,7 +102,7 @@
             <!-- <span class="hx:mx-1">内容</span> -->
             <span>【相关主题】:</span>
             {{ range $idx, $cat := . }}
-            <a href='{{ "/categories/" | relLangURL }}{{ . | urlize }}' class="hover:hx:underline">{{ . }}</a>{{ if ne
+            <a href='{{"/categories/" | relLangURL }}{{ . | urlize }}' class="article-meta-links">{{ . }}</a>{{ if ne
             $idx (sub (len $.Params.categories) 1) }}，{{ end }}
             {{ end }}
           </div>
@@ -142,7 +140,9 @@
             </div>  -->
 
       </div>
-      {{ end }}
+      {{ end }}      
+      <div class="content hx:mx-1"> 
+
       <!-- ========= 新增结束 ========= -->
 
       

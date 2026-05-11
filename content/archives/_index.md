@@ -1,29 +1,11 @@
 ---
-title: 归档
-series: []
-tags: []
-categories: []
-draft: false
-date: 2026-05-06
-lastmod: 2026-05-07
-# 其他配置字段
-toc: false
-weight: 7
+title: "归档"
+type: default
+layout: "single"
 ---
 
-<!-- 
 
-  # 在hugo.yaml中设置归档的默认目录和日期格式，即按时间线顺序查看
-  archives:
-    section: docs
-    dateFormat: "Jan 02"
-
- -->
-
-
-这里是已经归档（即使用时间线形式查看所有文档）的页面
-
+其实是自己定义的“归档”系列，这个系列基本都是用时间轴展示目录
 <br>
-
 
 {{< list-by-taxonomy taxonomy="series" terms="归档" match="any" >}}

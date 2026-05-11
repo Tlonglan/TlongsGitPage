@@ -1,3 +1,8 @@
+
+{{- /* 支持按目录、属性、数量筛选内容，然后按时间逆序(或顺序)展示，支持设置每页展示数量 */ -}}
+{{- /* timeline sections="docs" categories="Hugo" pageSize="20" limit="2" order="asc" */ -}}
+{{- /* timeline sections="blog,docs" categories="旅行,技术" tags="精华" series="年度总结" */ -}}
+
 {{- $debug := .Get "debug" | default "false" -}}
 {{- if eq $debug "true" }}{{ warnf "[timeline] 开始处理" }}{{ end -}}
 
@@ -176,8 +181,15 @@
                 <div>
                   <a href="{{ $entry.url }}" class="hx:font-medium hx:text-gray-700 dark:hx:text-gray-300 hx:transition-colors hx:duration-150 hover:hx:text-primary-600 dark:hover:hx:text-primary-400">{{ $entry.title }}</a>
                   {{- with $entry.tags -}}
-                    <span class="hx:text-xs hx:leading-7">{{ partial "tags.html" (dict "context" $) }}</span>
-                  {{- end -}}
+                    {{- $tagList := . -}}
+                    {{- $tagCount := len $tagList -}}
+                    <span class="hx:text-xs hx:leading-7 hx:ml-2">
+                      {{- range $idx, $tag := $tagList -}}
+                        <a href="{{ "/tags/" | relLangURL }}{{ $tag | urlize }}" class="hx:no-underline hover:hx:underline">{{ $tag }}</a>
+                        {{- if ne $idx (sub $tagCount 1) -}}，{{ end -}}
+                      {{- end -}}
+                    </span>
+                {{- end -}}
                 </div>
               </div>
             {{- end -}}

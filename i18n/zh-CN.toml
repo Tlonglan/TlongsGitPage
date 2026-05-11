@@ -45,17 +45,21 @@ viewAsMarkdown =  "以 Markdown 查看"
 # 顶栏主菜单
 home = "主页"
 quick-start = "快速导航"
-documentation = "输出文档"
-showreel = "作品集"
+documentation = "输出沉淀"
+idea-workshop = "创作工坊"
 references = "参考资料"
 greatresource = "资源好物"
 
 
-content-series = "内容分类"
-series = "内容系列"
-websitetags = "内容类型"
+
+
+content-classification = "内容分类"
+series = "系列-功能"
+content-series = "系列-内容"
+website-tags = "内容类型"
 categories = "所有主题"
 
 about = "关于"
+showreel = "作品集"
 contact = "联系"
 search = "搜索"

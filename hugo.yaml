@@ -19,6 +19,7 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+      hardWraps: true
 
     
     extensions:
@@ -76,40 +77,56 @@ menu:
       params:
         type: link
         icon: book-open
+    - identifier: idea-workshop
+      name: Idea-Workshop
+      pageRef: /idea-workshop
+      weight: 3
+      parent: quick-start
+      params:
+        type: link
+        icon: sparkles
     - identifier: greatresource
       name: Greatresource
       pageRef: /greatresource
-      weight: 3
+      weight: 4
       parent: quick-start
       params:
         type: link
         icon: thumb-up
 
 
-    - identifier: content-series
-      name: content-series
+    - identifier: content-classification
+      name: content-classification
       weight: 3
-    - identifier: websitetags
+    - identifier: website-tags
       name: Tags
       pageRef: /tags
       weight: 1
-      parent: content-series
+      parent: content-classification
       params:
         type: link
         icon: hashtag
+    - identifier: content-series
+      name: Content-series
+      pageRef: /content-series
+      weight: 2
+      parent: content-classification
+      params:
+        type: link
+        icon: academic-cap
     - identifier: series
       name: Series
       pageRef: /series
-      weight: 2
-      parent: content-series
+      weight: 3
+      parent: content-classification
       params:
         type: link
         icon: library
     - identifier: archives
       name: Archives
       pageRef: /archives
-      weight: 3
-      parent: content-series
+      weight: 4
+      parent: content-classification
     
     - identifier: categories
       name: Categories
@@ -119,7 +136,7 @@ menu:
     
     - identifier: showreel
       name: Showreel
-      pageRef: /showreel
+      pageRef: /idea-workshop/showreel
       weight: 5
       params:
         type: link

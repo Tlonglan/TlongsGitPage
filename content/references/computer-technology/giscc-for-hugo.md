@@ -1,9 +1,9 @@
 ---
-title: 为你的 HUGO 博客集成 Giscus 评论系统
+title: 配置-Giscus评论系统到Hugo博客
 type: docs
 series: [精选内容]
-tags: [方案教程]
-categories: [Hugo, 配置]
+tags: [5-方案教程]
+categories: [Hugo, 网站, 配置, Giscus]
 draft: false
 date: 2026-05-06
 lastmod: 2026-05-07

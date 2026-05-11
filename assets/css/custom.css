@@ -25,3 +25,14 @@
   }
   
 }
+
+
+
+a.article-meta-links {
+  color: var(--hx-color-primary-600) !important;
+  text-decoration: none;
+}
+
+a.article-meta-links:hover {
+  text-decoration: underline;
+}

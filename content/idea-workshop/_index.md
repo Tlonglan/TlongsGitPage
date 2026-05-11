@@ -1,5 +1,5 @@
 ---
-title: 作品集
+title: 创作工坊
 type: directory-list
 weight: 2
 ---

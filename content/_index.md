@@ -8,16 +8,17 @@ toc: false
 
 <br>
 
-<div class="hx:flex hx:items-center hx:flex-wrap hx:gap-4">
+<!-- <div class="hx:flex hx:items-center hx:flex-nowrap hx:gap-4"> -->
+<div class="hx:flex hx:items-center hx:gap-12">
 
-<div class="hx:flex-1">
+<div class="hx:flex-1 hx:min-w-0 hx:max-w-2xl">
 {{< hextra/hero-headline >}}蓝天龙的小站<br>{{< /hextra/hero-headline >}}
 
 
 
 <div class="hx:pt-4">
 {{< hextra/hero-subtitle style="line-height:1.5;">}}
-所有改变<br>都源于对改变的强烈渴望<br>
+所有改变<br>都源于对改变的强烈渴望
 所有思考<br>都来自对美好的不懈追求
 {{< /hextra/hero-subtitle >}}
 </div>
@@ -49,21 +50,14 @@ toc: false
 
 
 
-<!-- <br>
-{{< hextra/feature-grid cols="3" >}}
-  {{< hextra/feature-card title="One" >}}
-  {{< hextra/feature-card title="Two" >}}
-  {{< hextra/feature-card title="Three" >}}
-{{< /hextra/feature-grid >}} -->
-
-
 </div>
 
 
 <!-- 展示 logo -->
-  <div class="hx:mx-auto">
-    <a class="hero-logo not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl">
-      <img src="/images/logo.svg" alt="Logo" width="350" >
+  <!-- <div class="hx:flex hx:justify-center"> -->
+  <div class="hx:flex-1 hx:flex hx:justify-center hx:w-[50%]">
+    <a class="hero-logo hx:-translate-x-4 not-prose hx:block hx:relative hx:overflow-hidden hx:rounded-3xl">
+      <img src="static/logo.svg" alt="Logo" width="350" >
     </a>
   </div>
 </div>
@@ -79,15 +73,15 @@ toc: false
 
 {{< cards cols="2" >}}
 
-  {{< hextra/feature-card title="输出文档" subtitle="我思故我在" 
+  {{< hextra/feature-card title="输出沉淀" subtitle="我思，故我在" 
     style="background:radial-gradient(ellipse at 50% 80%,rgba(53, 83, 255, 0.15),hsla(0,0%,100%,0))" icon="pencil-alt" link="/docs" >}}
-  {{< hextra/feature-card title="作品集合" subtitle="星光闪耀照亮舞台"
+  {{< hextra/feature-card title="创作工坊" subtitle="上帝说，要有光"
     style="background:radial-gradient(ellipse at 50% 80%,rgba(221,210,59,0.15),hsla(0,0%,100%,0))"
-    icon="sparkles" link="/showreel" >}}
-  {{< hextra/feature-card title="参考资料" subtitle="读书破万卷"
+    icon="sparkles" link="/idea-workshop" >}}
+  {{< hextra/feature-card title="参考资料" subtitle="他山之石，可以攻玉"
     style="background:radial-gradient(ellipse at 50% 80%,rgba(194,97,254,0.15),hsla(0,0%,100%,0))"
     icon="book-open" link="/references" >}}
-  {{< hextra/feature-card title="资源好物" subtitle="快乐被分享就会加倍"
+  {{< hextra/feature-card title="资源好物" subtitle="分享快乐，快乐加倍"
     style="background:radial-gradient(ellipse at 50% 80%,rgba(142,53,74,0.15),hsla(0,0%,100%,0))"
     icon="thumb-up" link="/greatresource" >}}
 
@@ -109,6 +103,13 @@ toc: false
 
 {{< list-by-taxonomy taxonomy="series" terms="精选内容" match="any" >}}
 
+
+<!-- <br>
+{{< hextra/feature-grid cols="3" >}}
+  {{< hextra/feature-card title="One" >}}
+  {{< hextra/feature-card title="Two" >}}
+  {{< hextra/feature-card title="Three" >}}
+{{< /hextra/feature-grid >}} -->
 
 
 <br>

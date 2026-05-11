@@ -1,9 +1,9 @@
 ---
-title: 常用Ae代码
+title: 常用Ae表达式
 type: docs
 series: [精选内容]
-tags: [经验技巧]
-categories: [Ae, 动画, Javascript]
+tags: [5-经验技巧]
+categories: [Ae, 动画, Javascript语言]
 draft: false
 date: 2024-05-06
 lastmod: 2024-05-07

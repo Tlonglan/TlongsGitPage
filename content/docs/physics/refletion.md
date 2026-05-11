@@ -1,9 +1,9 @@
 ---
-title: 金属与非金属的反射系数计算
+title: 计算-金属与非金属的反射系数
 type: docs
-series: [计算, 精选内容]
-tags: [方案教程]
-categories: [物理, 菲涅尔现象]
+series: [精选内容]
+tags: [5-方案教程]
+categories: [物理, 菲涅尔现象, Mathematica语言, 计算]
 draft: false
 date: 2026-05-06
 lastmod: 2026-05-07
