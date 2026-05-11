@@ -1,18 +1,26 @@
-<div>
+<div class="hx:h-full hx:rounded-2xl hx:border hx:border-gray-200 dark:hx:border-neutral-800 hx:p-6 hx:shadow-sm">
+
   {{- if or .icon .title -}}
-  <div class="hx:flex hx:items-center hx:mb-3">
+  <div class="hx:flex hx:items-center hx:gap-3 hx:mb-4">
+
     {{- if .icon -}}
-      <div class="margin-right: 2rem;">
-        {{- $attrs := .attributes | default "height=30 width=30" -}}
+      <div class="hx:text-primary-600 dark:hx:text-primary-400">
+        {{- $attrs := .attributes | default "height=28 width=28" -}}
         {{- partial "utils/icon.html" (dict "name" .icon "attributes" $attrs) -}}
       </div>
     {{- end -}}
+
     {{- if .title -}}
-      <h3 class="{{ .titleClass | default "hx:font-semibold hx:text-lg" }}">{{ .title }}</h3>
+      <h3 class="{{ .titleClass | default "hx:text-xl hx:font-semibold" }}">
+        {{ .title }}
+      </h3>
     {{- end -}}
+
   </div>
   {{- end -}}
-  <div class="hx:prose dark:hx:prose-invert hx:max-w-none">
+
+  <div class="content">
     {{ .inner }}
   </div>
+
 </div>

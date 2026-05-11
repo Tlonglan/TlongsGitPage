@@ -2,8 +2,8 @@
 title: 演示-默认文档
 type: default
 draft: false
-series: [尝鲜, 演示]
 tags: [0-功能测试]
+series: [尝鲜, 演示]
 categories: []
 
 date: 2026-05-06

@@ -71,9 +71,9 @@
                   {{- if gt $totalPrimary $maxPrimary -}}
                     当前共有 {{ $totalPrimary }} 个专栏，为优化浏览体验，此处仅显示第 {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }} 页，不展示子文章条目。请点击下方专栏标题进入查看详细内容。
                   {{- else if $exceedSecondary -}}
-                    以下专栏的文章数量较多，为避免页面过长，此处仅显示专栏列表，不展示其子文章。建议您将这些专栏进一步拆分或使用分页：
-                    {{ range $exceedItems }}
+                    以下专栏的文章数量较多，{{ range $exceedItems }}
                       <a href="{{ .link }}" class="hx:underline">{{ .title }}</a> ({{ .count }}篇)
+                      <br>为避免页面过长，此处仅显示专栏列表，不展示子文章。建议您将这些专栏进一步拆分至 <strong>专栏内少于 {{$maxSecondary}} 篇内容</strong>：
                     {{ end }}。
                   {{- end -}}
                 </p>
@@ -98,7 +98,9 @@
           {{- /* 分页导航 */ -}}
           {{- if gt $paginator.TotalPages 1 -}}
             <div class="hx:mt-8 hx:flex hx:justify-center">
+              <div class="hextra-pagination">
               {{ partial "components/blog-pager.html" $paginator }}
+              </div>
             </div>
           {{- end -}}
 

@@ -1,8 +1,8 @@
 ---
 title: 演示-docs型文档
 type: docs
-series: [尝鲜, 演示]
 tags: [0-功能测试]
+series: [尝鲜, 演示]
 categories: []
 draft: false
 date: 2026-05-06

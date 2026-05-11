@@ -27,7 +27,7 @@
 }
 
 
-
+/* 内容型文档的元数据超链接应呈现蓝色样式 */
 a.article-meta-links {
   color: var(--hx-color-primary-600) !important;
   text-decoration: none;
@@ -35,4 +35,14 @@ a.article-meta-links {
 
 a.article-meta-links:hover {
   text-decoration: underline;
+}
+
+
+
+
+/* 修复directory-list分页按钮文字竖排 */
+.hextra-pagination a {
+  white-space: nowrap;
+  word-break: normal !important;
+  flex-shrink: 0;
 }
