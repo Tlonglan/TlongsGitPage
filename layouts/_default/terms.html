@@ -1,5 +1,5 @@
 {{ define "main" }}
-  <!-- 按首字母排序，并统计相关文件数量，配合css制作词云效果 -->
+<!-- 按首字母排序，并统计相关文件数量，配合css制作词云效果 -->
   <div class='hx:mx-auto hx:flex hextra-max-page-width'>
     {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
     {{ partial "toc.html" (dict "Params" (dict "toc" false)) }}

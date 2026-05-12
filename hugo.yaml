@@ -186,6 +186,8 @@ menu:
         icon: Bilibili
 
 
+# 支持emoji代码
+enableEmoji: true
 
 enableGitInfo: true
 
