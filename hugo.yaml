@@ -59,7 +59,7 @@ menu:
     - identifier: showreel
       name: Showreel
       pageRef: /idea-workshop/showreel
-      weight: 1
+      weight: 4
       params:
         type: link
         icon: sparkles
@@ -68,7 +68,7 @@ menu:
     - identifier: categories
       name: Categories
       pageRef: /categories
-      weight: 2
+      weight: 3
       params:
         type: link
         icon: at-symbol
@@ -78,7 +78,7 @@ menu:
 
     - identifier: quick-start
       name: quick-start
-      weight: 4
+      weight: 1
     - identifier: documentation
       name: Doc
       pageRef: /docs
@@ -123,7 +123,7 @@ menu:
 
     - identifier: content-classification
       name: content-classification
-      weight: 3
+      weight: 2
     - identifier: website-tags
       name: Tags
       pageRef: /tags

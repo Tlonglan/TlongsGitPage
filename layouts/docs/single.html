@@ -13,6 +13,8 @@
           </div>
           {{ end }}
 
+          <div class="hx:mb-2"></div>
+
           <!-- ========= 新增：文章元信息（分类、标签、系列、发布时间、最后编辑时间） ========= -->
           {{ if or .Params.categories .Params.tags .Params.series .Date .Lastmod }}
           <div
@@ -103,6 +105,7 @@
           </div>
           {{ end }}
           <!-- ========= 新增结束 ========= -->
+
         <div class="content">
 
           <hr style="margin-top: 3px; margin-bottom: 3px;">
