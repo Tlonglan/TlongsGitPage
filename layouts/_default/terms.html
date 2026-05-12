@@ -1,0 +1,47 @@
+<!-- 对 tags、series、categories 进行首字母排序和统计 -->
+ <!-- 并配合自定义的词云css样式 渲染词云效果，相关内容越多，字号越大 -->
+
+{{ define "main" }}
+  <div class='hx:mx-auto hx:flex hextra-max-page-width'>
+    {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
+    {{ partial "toc.html" (dict "Params" (dict "toc" false)) }}
+    <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main id="content" class="hx:w-full hx:min-w-0 hextra-max-content-width hx:px-6 hx:pt-4 hx:md:px-12">
+        <br class="hx:mt-1.5 hx:text-sm" />
+        {{ if .Title }}<h1 class="hx:text-center hx:mt-2 hx:text-4xl hx:font-bold hx:tracking-tight hx:text-slate-900 hx:dark:text-slate-100">{{ .Title }}</h1>{{ end }}
+        <div class="hx:mb-16"></div>
+        <div class="content">
+          {{ .Content }}
+        </div>
+
+        {{/* ===== 以下是词云区域 ===== */}}
+        {{ $terms := .Data.Terms.Alphabetical }}
+        {{ $maxCount := 0 }}
+        {{ range $terms }}
+          {{ if gt .Count $maxCount }}
+            {{ $maxCount = .Count }}
+          {{ end }}
+        {{ end }}
+
+        {{ if gt $maxCount 0 }}
+          <div class="word-cloud">
+            {{ range $terms }}
+              {{ $relativeSize := div (mul .Count 100) $maxCount }}
+              <a href="{{ .Page.RelPermalink }}" 
+                 class="word-cloud-item" 
+                 style="--word-size: {{ $relativeSize }};"
+                 title="{{ .Term }} ({{ .Count }} 篇)">
+                {{ .Term }}
+                <sup>{{ .Count }}</sup>
+              </a>
+            {{ end }}
+          </div>
+        {{ else }}
+          <p class="hx:text-center hx:mt-8 hx:text-gray-500">暂无分类内容。</p>
+        {{ end }}
+        {{/* ===== 词云区域结束 ===== */}}
+
+      </main>
+    </article>
+  </div>
+{{ end }}

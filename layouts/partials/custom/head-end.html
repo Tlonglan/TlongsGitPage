@@ -1,0 +1,14 @@
+{{- /* 加载自定义 FAB 菜单脚本 */ -}}
+{{- $fabJS := resources.Get "js/mobile-toc-fab.js" -}}
+{{- if $fabJS -}}
+  {{- $fabJS = $fabJS | resources.Minify | resources.Fingerprint -}}
+  <script src="{{ $fabJS.RelPermalink }}" defer></script>
+{{- end -}}
+
+
+{{- /* 加载自定义 FAB 菜单样式 */ -}}
+{{- $fabCSS := resources.Get "css/mobile-toc-fab.css" -}}
+{{- if $fabCSS -}}
+  {{- $fabCSS = $fabCSS | resources.Minify | resources.Fingerprint -}}
+  <link rel="stylesheet" href="{{ $fabCSS.RelPermalink }}" />
+{{- end -}}

@@ -49,18 +49,17 @@ taxonomies:
 # 顶栏菜单 
 menu:
   main:
-    - identifier: home
-      name: Home
-      pageRef: /
-      weight: 1
-      params:
-        type: link
-        icon: home
-
+    # - identifier: home
+    #   name: Home
+    #   pageRef: /
+    #   weight: 5
+    #   params:
+    #     type: link
+    #     icon: home
 
     - identifier: quick-start
       name: quick-start
-      weight: 2
+      weight: 1
     - identifier: documentation
       name: Doc
       pageRef: /docs
@@ -97,7 +96,7 @@ menu:
 
     - identifier: content-classification
       name: content-classification
-      weight: 3
+      weight: 2
     - identifier: website-tags
       name: Tags
       pageRef: /tags
@@ -131,19 +130,19 @@ menu:
     - identifier: categories
       name: Categories
       pageRef: /categories
-      weight: 4 
+      weight: 3 
     
     
     - identifier: showreel
       name: Showreel
       pageRef: /idea-workshop/showreel
-      weight: 5
+      weight: 4
       params:
         type: link
         icon: sparkles
 
 
-
+    
     - identifier: about
       name: About
       pageRef: /about

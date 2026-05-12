@@ -1,7 +1,6 @@
 ---
-title: 输出文档
+title: 输出沉淀
 type: directory-list
-breadcrumbs: false
 cascade:
     params:
         reversePagination: false
