@@ -56,10 +56,29 @@ menu:
     #   params:
     #     type: link
     #     icon: home
+    - identifier: showreel
+      name: Showreel
+      pageRef: /idea-workshop/showreel
+      weight: 1
+      params:
+        type: link
+        icon: sparkles
+
+
+    - identifier: categories
+      name: Categories
+      pageRef: /categories
+      weight: 2
+      params:
+        type: link
+        icon: at-symbol
+
+
+
 
     - identifier: quick-start
       name: quick-start
-      weight: 1
+      weight: 4
     - identifier: documentation
       name: Doc
       pageRef: /docs
@@ -92,11 +111,19 @@ menu:
       params:
         type: link
         icon: thumb-up
+    - identifier: blog
+      name: Blog
+      pageRef: /blog
+      weight: 5
+      parent: quick-start
+      params:
+        type: link
+        icon: user
 
 
     - identifier: content-classification
       name: content-classification
-      weight: 2
+      weight: 3
     - identifier: website-tags
       name: Tags
       pageRef: /tags
@@ -127,20 +154,9 @@ menu:
       weight: 4
       parent: content-classification
     
-    - identifier: categories
-      name: Categories
-      pageRef: /categories
-      weight: 3 
-    
-    
-    - identifier: showreel
-      name: Showreel
-      pageRef: /idea-workshop/showreel
-      weight: 4
-      params:
-        type: link
-        icon: sparkles
 
+    
+    
 
     
     - identifier: about

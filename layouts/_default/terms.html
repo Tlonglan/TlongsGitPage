@@ -1,7 +1,5 @@
-<!-- 对 tags、series、categories 进行首字母排序和统计 -->
- <!-- 并配合自定义的词云css样式 渲染词云效果，相关内容越多，字号越大 -->
-
 {{ define "main" }}
+  <!-- 按首字母排序，并统计相关文件数量，配合css制作词云效果 -->
   <div class='hx:mx-auto hx:flex hextra-max-page-width'>
     {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
     {{ partial "toc.html" (dict "Params" (dict "toc" false)) }}

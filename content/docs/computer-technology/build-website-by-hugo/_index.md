@@ -1,13 +1,18 @@
 ---
 title: 使用Hugo框架搭建网站技巧
-type: docs
-series: []
-tags: [5-经验技巧]
-categories: [计算机, 网站, Hugo]
 draft: false
-date: 2026-05-11
-lastmod: 2026-05-11
+# 内容属性
+tags: [5-经验技巧]
+series: []
+categories: [计算机, 网站, Hugo]
+type: docs
+# 时间属性
+date: 2026-05-12
+lastmod: 2026-05-12
+# 其他配置字段
+layout: single
 ---
+
 
 
 ## 准备
