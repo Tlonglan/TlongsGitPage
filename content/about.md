@@ -26,7 +26,11 @@ weight: 7
 好吧，大概就是这样子的过程了，希望你能在这里玩得开心 ~ 关于本站的更多的介绍可以前往这个[介绍页面](/all-demo/web-guide)
 对了，如果你想在某篇内容下留言，记得登录或注册一个 {{< icon "github" >}}[Github](https://www.github.com) 账号~ 
 
-蓝天龙
-敬上
+
+
+<p style="text-align: right">
+蓝天龙<br>
+敬上<br>
 2026-05-12
+</p>
 
