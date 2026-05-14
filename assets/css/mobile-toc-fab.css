@@ -101,10 +101,10 @@
 }
 
 /* 手动定义常见的缩进级别 (与 Tailwind 间距对应) */
-.fab-toc-container ul a.hx\:ltr\:pl-0 { --pl-value: 0; }
-.fab-toc-container ul a.hx\:ltr\:pl-4 { --pl-value: 1rem; }
-.fab-toc-container ul a.hx\:ltr\:pl-8 { --pl-value: 2rem; }
-.fab-toc-container ul a.hx\:ltr\:pl-12 { --pl-value: 3rem; }
+.fab-toc-container ul a.hx\:ltr\:pl-0 { --pl-value: 0; }        /*二级标题*/
+.fab-toc-container ul a.hx\:ltr\:pl-4 { --pl-value: 2rem; }     /*三级标题*/
+.fab-toc-container ul a.hx\:ltr\:pl-8 { --pl-value: 3rem; }     /*四级标题*/
+.fab-toc-container ul a.hx\:ltr\:pl-12 { --pl-value: 4.5rem; }  /*五级标题*/
 
 /* 如果 Hextra 同时使用了 rtl 版本，也加一下 */
 .fab-toc-container ul a.hx\:rtl\:pr-4 { padding-right: 1rem !important; }

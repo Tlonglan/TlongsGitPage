@@ -265,6 +265,7 @@ params:
       repoId: R_kgDOSVn-gw
       category: Announcements
       categoryId: DIC_kwDOSVn-g84C8fg7
+      mapping: "pathname"
       lang: "zh-CN"                 # 建议明确指定语言，用 "zh-CN" 亦可
       reactionsEnabled: 1           # 开启 reactions
       inputPosition: "top"          # 评论输入框位置，可选 "top" 或 "bottom"

@@ -55,16 +55,14 @@ a.article-meta-links:hover {
 
 
 /* 修复：
-桌面端和移动端的脚注返回链接的位置被导航栏遮挡
-同时不影响目录跳转 
+桌面端和移动端的脚注、一些没有成功生成原生目录的文章
+避免跳转时返回链接的位置被导航栏遮挡
 */
-sup[id] {
+/* sup[id] { */
   /* scroll-margin-top: var(--navbar-height); */
-  scroll-margin-top: calc(var(--hx-spacing) * 16 + env(safe-area-inset-top, 0px));;
+h2[id], h3[id], h4[id], h5[id], h6[id], sup[id] {
+  scroll-margin-top: calc(var(--hx-spacing) * 16 + env(safe-area-inset-top, 0px));
 }
-
-
-
 
 
 /* 自定义引用块样式 */
