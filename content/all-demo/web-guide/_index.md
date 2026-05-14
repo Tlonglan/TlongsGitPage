@@ -18,11 +18,11 @@ lastmod: 2026-05-11
 
 这个文档主要是用于说明网站内容的主要结构，以及展示几种主要类型的文档页面，以便访问的时候更好地浏览。
 
-> [!note] **说明**
+> [!note] 说明
 > 当然，这同时也是一份关于这个网站内容编辑标准的备忘录（防止太久自己都忘记该怎么编辑，有哪些功能可以使用，需要怎么维护😏），所以这份说明在最后的部分会有一些技术内容，例如一些功能怎么实现的
 
 
-> [!tip] **小贴士**
+> [!tip] 小贴士
 > 这个网站是基于 Hugo 框架的 Hextra 主题搭建，因此更多技术上的信息可以查看[hugo官网](https://hugo.opendocs.io/)、[Hextra主题的github仓库](https://github.com/imfing/hextra) 以及 [Hextra主题的帮助文档](https://imfing.github.io/hextra/zh-cn/docs/getting-started/)
 
 

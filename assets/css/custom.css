@@ -55,7 +55,7 @@ a.article-meta-links:hover {
 
 
 /* 修复：
-桌面端脚注返回链接的位置被导航栏遮挡
+桌面端和移动端的脚注返回链接的位置被导航栏遮挡
 同时不影响目录跳转 
 */
 sup[id] {
@@ -64,3 +64,47 @@ sup[id] {
 }
 
 
+
+
+
+/* 自定义引用块样式 */
+blockquote {
+  /* border-left: 4px solid #3b82f6; */
+  /* background-color: #f9fafb;        */
+  border-left: 4px solid #1b468b;
+  background-color: #f7fbff;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 8px 8px 0;      /* 右侧圆角 */
+  color: #374151;
+}
+
+/* 引用内的段落间距 */
+blockquote p {
+  margin: 0.5rem 0;
+}
+
+/* 引用内的强调文字 */
+blockquote strong {
+  /* color: #1f2937; */
+  color: #0030b6;
+}
+
+/* 暗色模式适配 */
+.dark blockquote {
+  background-color: #1f2937;
+  border-left-color: #60a5fa;
+  color: #d1d5db;
+}
+.dark blockquote strong {
+  color: #f9fafb;
+}
+
+
+
+
+
+/* 针对高亮块（callout）内的标题加粗 */
+.hx\:rounded-lg.hx\:border > p.hx\:font-medium {
+  font-weight: bold !important;
+}

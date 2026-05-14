@@ -1,0 +1,8 @@
+# workers名称，即cloudflare的项目名
+name = "tlongsgitpage"
+# 填写当前日期即可
+compatibility_date = "2026-05-14"
+
+[assets]
+# hugo的输入路径
+directory = "./public/"
