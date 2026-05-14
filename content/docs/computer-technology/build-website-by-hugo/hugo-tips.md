@@ -7,8 +7,8 @@ tags: [5-经验技巧]
 series: []
 categories: [Hugo, 模板]
 # 时间属性
-date: ""
-lastmod: ""
+date: "2026-05-13"
+lastmod: "2026-05-13"
 # 其他配置字段
 ---
 

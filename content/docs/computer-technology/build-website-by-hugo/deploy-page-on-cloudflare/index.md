@@ -1,5 +1,5 @@
 ---
-title: 部署 Github 项目到 Cloudflare Pages
+title: 部署 Hugo静态站点 项目到 Cloudflare Pages
 type: "docs"
 draft: false
 # 内容属性
@@ -17,7 +17,7 @@ description: ""
 
 ## 注意事项
 
-1. 在根目录创建一个 `wrangler.toml` 文件，内容如下：
+1. 在站点根目录创建一个 `wrangler.toml` 文件，内容如下：
    ```
     # workers名称，即cloudflare的项目名
     name = "mygitpage"
