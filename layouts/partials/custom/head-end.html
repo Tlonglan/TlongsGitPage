@@ -1,4 +1,6 @@
-
+<meta name="hextra-page-kind" content="{{ .Kind }}">
+<meta name="hextra-page-type" content="{{ .Params.type }}">
+<meta name="hextra-page-toc" content="{{ .Params.toc }}">
 
 {{- /* 加载自定义 FAB 菜单样式 */ -}}
 {{- $fabCSS := resources.Get "css/mobile-toc-fab.css" -}}
@@ -8,18 +10,18 @@
 {{- end -}}
 
 
-{{- /* 加载自定义词云样式 */ -}}
-{{- $wordCloudCSS := resources.Get "css/word-cloud.css" -}}
-{{- if $wordCloudCSS -}}
-  {{- $wordCloudCSS = $wordCloudCSS | resources.Minify | resources.Fingerprint -}}
-  <link rel="stylesheet" href="{{ $wordCloudCSS.RelPermalink }}" />
-{{- end -}}
-
-
 
 {{- /* 加载自定义 FAB 菜单脚本 */ -}}
 {{- $fabJS := resources.Get "js/mobile-toc-fab.js" -}}
 {{- if $fabJS -}}
   {{- $fabJS = $fabJS | resources.Minify | resources.Fingerprint -}}
   <script src="{{ $fabJS.RelPermalink }}" defer></script>
+{{- end -}}
+
+
+{{- /* 加载自定义词云样式 */ -}}
+{{- $wordCloudCSS := resources.Get "css/word-cloud.css" -}}
+{{- if $wordCloudCSS -}}
+  {{- $wordCloudCSS = $wordCloudCSS | resources.Minify | resources.Fingerprint -}}
+  <link rel="stylesheet" href="{{ $wordCloudCSS.RelPermalink }}" />
 {{- end -}}

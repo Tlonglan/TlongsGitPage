@@ -2,7 +2,24 @@ document.addEventListener('DOMContentLoaded', function () {
   const BUTTON_ICON = '☰';
   const CLOSE_ICON = '✕';
 
-  // 1. 尝试从原生 TOC 克隆（保留该功能）
+  // === 新增：读取页面元信息 ===
+  const pageKind = document.querySelector('meta[name="hextra-page-kind"]')?.content;
+  const pageType = document.querySelector('meta[name="hextra-page-type"]')?.content;
+  const pageTocParam = document.querySelector('meta[name="hextra-page-toc"]')?.content;
+
+  // === 规则：主页完全禁止 ===
+  if (pageKind === 'home') return;
+
+  // === 规则：索引页（directory-list）根据 toc 参数决定 ===
+  if (pageType === 'directory-list') {
+    // 只有 frontmatter 显式设置了 toc: true 时才显示
+    if (pageTocParam !== 'true') return;
+  }
+
+  // === 其他页面（docs、blog等）：若 toc 为 false 则隐藏 ===
+  if (pageTocParam === 'false') return;
+
+  // 1. 尝试从原生 TOC 克隆
   let tocList = null;
   const nativeTocNav = document.querySelector('.hextra-toc');
   if (nativeTocNav) {
@@ -12,26 +29,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // 2. 如果没有可用的原生目录，则从页面标题动态生成
+  // 2. 如果没有原生目录，则从页面标题动态生成
   if (!tocList) {
     const headings = document.querySelectorAll('h2, h3, h4, h5, h6');
-    if (headings.length === 0) return; // 完全没有标题，不创建按钮
+    if (headings.length === 0) return;
 
     tocList = document.createElement('ul');
     headings.forEach(heading => {
       const text = heading.textContent.trim();
-      if (!text) return; // 跳过空标题
+      if (!text) return;
 
       let id = heading.id;
       if (!id) {
-        // 如果标题没有 id，自动生成一个基于内容的 id
         id = text
           .replace(/\s+/g, '-')
-          .replace(/[^\w\u4e00-\u9fff-]/g, '') // 保留字母、数字、汉字和连字符
+          .replace(/[^\w\u4e00-\u9fff-]/g, '')
           .toLowerCase();
-        // 兜底：若生成后为空，用随机数
         if (!id) id = 'heading-' + Math.random().toString(36).substr(2, 9);
-        heading.id = id; // 把生成的 id 赋给标题元素，确保锚点跳转有效
+        heading.id = id;
       }
 
       const level = parseInt(heading.tagName.substring(1));
@@ -44,11 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
       tocList.appendChild(li);
     });
 
-    // 如果过滤后一个有效标题都没有，就不创建按钮
     if (tocList.children.length === 0) return;
   }
 
-  // 3. 创建 UI（遮罩、面板、按钮）
+  // 3. 创建 UI
   const overlay = document.createElement('div');
   overlay.className = 'fab-toc-overlay';
 
@@ -96,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.target.closest('a')) setTimeout(hideTOC, 100);
   });
 
-  // 窗口大小变化时，若原生 TOC 重新出现（桌面端），自动关闭悬浮面板
   window.addEventListener('resize', () => {
     if (nativeTocNav && nativeTocNav.offsetParent !== null) {
       hideTOC();
