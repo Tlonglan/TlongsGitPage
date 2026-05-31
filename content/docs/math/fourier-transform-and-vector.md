@@ -19,8 +19,8 @@ description: ""
 
 $$
 \begin{aligned}
-&a_n = \int_{t1}^{t2}f(x)\mathrm{sin}(nx) \mathrm{d}x \\
-&b_n = \int_{t1}^{t2}f(x)\mathrm{cos}(nx) \mathrm{d}x
+&a_n = \int_{t_1}^{t_2}f(x)\mathrm{sin}(nx) \mathrm{d}x \\
+&b_n = \int_{t_1}^{t_2}f(x)\mathrm{cos}(nx) \mathrm{d}x
 \end{aligned}
 $$
 
@@ -29,7 +29,7 @@ $$
 连续傅里叶变换的形式如下：
 
 $$
- F(\omega) = \int_{x1}^{x2}f(x)e^{-i\omega t} \mathrm{d}x
+ F(\omega) = \int_{x_1}^{x_2}f(x)e^{-i\omega t} \mathrm{d}x
 $$
 
 其中，$\omega \in \mathbb{C} $ 。
@@ -63,7 +63,7 @@ $$
 这个内积就可以被理解为，函数 $f(x)$ 在 $g(x)$ 这个单一的分量维度 上投影的值。对于连续函数 $f(x)$，求和则变成了积分：
 
 $$
-a_n = \int_{x1}^{x2}f(x)g(x) \mathrm{d}x
+a_n = \int_{x_1}^{x_2}f(x)g(x) \mathrm{d}x
 $$
 
 
