@@ -101,7 +101,7 @@ toc: false
 ## 精选内容
 <br>
 
-{{< list-by-taxonomy taxonomy="series" terms="精选内容" match="any" >}}
+{{< list-by-taxonomy taxonomy="series" terms="精选内容" match="any" orderByDate="true">}}
 
 
 <!-- <br>

@@ -1,9 +1,9 @@
 {{/*
   用法：
   {{< list-by-taxonomy taxonomy="tags" terms="Hugo,Hextra" match="any" >}}
-  {{< list-by-taxonomy taxonomy="categories" terms="技术,前端" match="all" exclude="旧文" >}}
+  {{< list-by-taxonomy taxonomy="categories" terms="技术,前端" match="all" exclude="旧文" orderByDate="true" >}}
   {{< list-by-taxonomy paths="blog/travel,blog/year-end" >}}
-  {{< list-by-taxonomy paths="docs" taxonomy="series" terms="教程" match="any" >}}
+  {{< list-by-taxonomy paths="docs" taxonomy="series" terms="教程" match="any" orderByDate="true" >}}
 */}}
 
 {{- $taxonomy := .Get "taxonomy" | default "" -}}
@@ -11,6 +11,7 @@
 {{- $match := .Get "match" | default "any" -}}
 {{- $excludeParam := .Get "exclude" | default "" -}}
 {{- $pathsParam := .Get "paths" | default "" -}}
+{{- $orderByDate := .Get "orderByDate" | default false -}}   <!-- 新增 -->
 
 {{- $pages := site.AllPages -}}
 
@@ -84,7 +85,15 @@
 {{- if $pages -}}
   <div class="hextra-archive-timeline">
     <ul class="hx:ml-1 hx:pl-1 hx:space-y-2">
-      {{- range $pages.ByTitle -}}
+      {{- /* 按指定方式排序 */ -}}
+      {{- $sortedPages := $pages -}}
+      {{- if $orderByDate -}}
+        {{- $sortedPages = $pages.ByDate.Reverse -}}
+      {{- else -}}
+        {{- $sortedPages = $pages.ByTitle -}}
+      {{- end -}}
+
+      {{- range $sortedPages -}}
         <li class="hx:flex hx:items-baseline">
           <a href="{{ .RelPermalink }}" 
              class="hx:font-bold hx:text-gray-700 dark:hx:text-gray-300 hover:hx:text-primary-600 dark:hover:hx:text-primary-400 hx:transition-colors hx:duration-150">

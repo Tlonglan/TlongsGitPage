@@ -189,7 +189,13 @@ menu:
 # 支持emoji代码
 enableEmoji: true
 
+# 获取文档的最后编辑时间
 enableGitInfo: true
+frontmatter:
+  lastmod:
+    - :git
+    - :fileModTime
+    - lastmod
 
 
 # 相关配置参数
