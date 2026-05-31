@@ -87,11 +87,16 @@
               {{ end }}
 
               <!-- <span style="white-space: pre;">    </span> -->
+              <span style="margin: 0 0.35rem;"></span>   <!-- 0.75rem ≈ 12px -->
 
               {{ if .Lastmod }}
                 {{ $lastmod := .Lastmod | time.Format (site.Params.dateFormat | default "2006-01-02") }}
                 {{ if and .Date (ne .Date .Lastmod) }}
-                  <div class="hx:flex hx:items-center hx:gap-1 hx:ml-4">  <!--将空白放入css-->
+
+                  <!--将空白放入css-->
+                  <!-- <div class="hx:flex hx:items-center hx:gap-1 hx:ml-4">  -->
+                  <div class="hx:flex hx:items-center hx:gap-1">
+
                     <div class="hx:w-4 hx:h-4">
                       {{ partial "utils/icon.html" (dict "name" "clock") }}
                     </div>
