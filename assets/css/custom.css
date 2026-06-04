@@ -61,7 +61,8 @@ a.article-meta-links:hover {
 /* sup[id] { */
   /* scroll-margin-top: var(--navbar-height); */
 h2[id], h3[id], h4[id], h5[id], h6[id], sup[id] {
-  scroll-margin-top: calc(var(--hx-spacing) * 16 + env(safe-area-inset-top, 0px));
+  /*这里的 0.5rem 是跳转后和导航栏之间的距离*/
+  scroll-margin-top: calc(var(--hx-spacing) * 16 + env(safe-area-inset-top, 0px) + 0.5rem); 
 }
 
 
@@ -105,4 +106,57 @@ blockquote strong {
 /* 针对高亮块（callout）内的标题加粗 */
 .hx\:rounded-lg.hx\:border > p.hx\:font-medium {
   font-weight: bold !important;
+}
+
+
+
+
+
+/* ========== 桌面端 TOC 高亮增强 ========== */
+
+/* 1. 给所有 TOC 链接加基础左内边距（不影响层级缩进） */
+.hextra-scrollbar ul a {
+  padding-left: 1rem;               /* 基础左内边距，让阴影离文字远一些 */
+}
+
+/* 2. 为带有缩进类的链接重新计算左内边距：原缩进值 + 基础值 */
+.hextra-scrollbar ul a[class*="hx:ltr:pl-"] {
+  padding-left: calc(var(--pl-value, 0) + 0rem) !important;
+}
+
+/* 3. 定义各层级的原始缩进变量（与 Tailwind 间距对应） */
+.hextra-scrollbar ul a.hx\:ltr\:pl-0  { --pl-value: 0; }
+.hextra-scrollbar ul a.hx\:ltr\:pl-4  { --pl-value: 1rem; }
+.hextra-scrollbar ul a.hx\:ltr\:pl-8  { --pl-value: 2rem; }
+.hextra-scrollbar ul a.hx\:ltr\:pl-12 { --pl-value: 3rem; }
+
+/* 4. 高亮样式保持不变 */
+.hextra-toc-active {
+  font-weight: bold !important;
+  color: #007bff !important;
+  background-color: rgba(0, 123, 255, 0.1);
+  box-shadow: inset 4px 0 0 0 #007bff;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+
+/* 移动端悬浮目录高亮样式（保持一致） */
+.fab-toc-container ul a.fab-toc-active {
+  font-weight: bold;
+  color: #007bff;
+  background-color: rgba(0, 123, 255, 0.1);
+  box-shadow: inset 4px 0 0 0 #007bff;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+
+
+/* 暗色主题适配 */
+.dark .hextra-toc-active,
+.dark .fab-toc-container ul a.fab-toc-active {
+  color: #60a5fa !important;                              /* 暗色模式下的亮蓝 */
+  background-color: rgba(96, 165, 250, 0.15);
+  box-shadow: inset 4px 0 0 0 #60a5fa;
 }

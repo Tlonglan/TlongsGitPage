@@ -90,6 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
     overlay.classList.add('is-visible');
     fab.innerHTML = CLOSE_ICON;
     document.body.style.overflow = 'hidden';
+    // 立即将面板滚动到当前高亮项的位置
+    updateActiveTocLink();
   };
   const hideTOC = () => {
     tocContainer.classList.remove('is-visible');
@@ -115,4 +117,111 @@ document.addEventListener('DOMContentLoaded', function () {
       hideTOC();
     }
   });
+
+
+
+
+
+
+  // === 移动端悬浮目录高亮 ===
+  function updateActiveTocLink() {
+    const links = tocList.querySelectorAll('a');
+    if (links.length === 0) return;
+
+    // 获取所有 h2~h6 标题，并自动为缺少 id 的标题生成 id
+    const headings = Array.from(document.querySelectorAll('h2, h3, h4, h5, h6'))
+      .map(h => {
+        if (!h.id) {
+          let id = h.textContent.trim()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w\u4e00-\u9fff-]/g, '')
+            .toLowerCase();
+          if (!id) id = 'heading-' + Math.random().toString(36).substr(2, 9);
+          h.id = id;
+        }
+        return h;
+      })
+      .filter(h => h.id);
+
+    if (headings.length === 0) return;
+
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    // 导航栏高度（可根据实际情况微调，Hextra 默认 ~64px）
+    const navbarHeight = 64;
+    // 视口高度的三分之一
+    const viewportOffset = window.innerHeight / 3;
+    const offset = navbarHeight + viewportOffset;
+
+
+    let currentHeading = null;
+    for (let i = headings.length - 1; i >= 0; i--) {
+      if (headings[i].offsetTop <= scrollTop + offset) {
+        currentHeading = headings[i];
+        break;
+      }
+    }
+
+    // 清除所有高亮
+    links.forEach(link => link.classList.remove('fab-toc-active'));
+
+    if (currentHeading) {
+      // 先尝试直接匹配（未编码的 href）
+      let activeLink = tocList.querySelector(`a[href="#${currentHeading.id}"]`);
+      if (!activeLink) {
+        // 若失败，遍历解码后比较
+        for (const link of links) {
+          const href = link.getAttribute('href');
+          if (href) {
+            const hash = href.substring(1);
+            try {
+              if (decodeURIComponent(hash) === currentHeading.id) {
+                activeLink = link;
+                break;
+              }
+            } catch (e) {
+              if (hash === currentHeading.id) {
+                activeLink = link;
+                break;
+              }
+            }
+          }
+        }
+      }
+      if (activeLink) {
+        activeLink.classList.add('fab-toc-active');
+
+        if (tocContainer.classList.contains('is-visible')) {
+          const linkRect = activeLink.getBoundingClientRect();
+          const containerRect = tocContainer.getBoundingClientRect();
+          // 计算链接在面板内容中的相对位置
+          const linkTopRelative = linkRect.top - containerRect.top + tocContainer.scrollTop;
+          // 目标滚动位置：使链接出现在面板高度的 1/4 处
+          const targetScrollTop = linkTopRelative - tocContainer.clientHeight / 4;
+          // 设置滚动，确保不超出内容范围
+          tocContainer.scrollTop = Math.max(0, targetScrollTop);
+        }
+      }
+
+    }
+  }
+
+  // 监听滚动事件（使用 requestAnimationFrame 节流）
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        updateActiveTocLink();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // 初始执行一次
+  updateActiveTocLink();
+
+
+
 });
+
+
