@@ -6,11 +6,32 @@ tags: [5-经验技巧]
 categories: [Ae, 动画, Javascript语言]
 draft: false
 date: 2024-05-06
-lastmod: 2024-05-07
+lastmod: 2026-07-09
 ---
 ---
 
-# 常用的Ae表达式
+
+
+
+## 父子关系真实坐标转换
+
+```javascript
+// 获得绑定了父子关系的子物体在合成空间中的真实坐标
+// 例如，A为父级，B为子级，在时间线面板中的位置属性显示的通常是 B 相对于 A 的坐标
+// 这个表达式是用于获取的 B在合成空间中的真实坐标
+
+targetLayer = thisComp.layer("子层");
+childLayer = targetLayer;
+while(childLayer.hasParent){
+childLayer = childLayer.parent;
+}
+parentLayer = childLayer; targetLayer.toComp(parentLayer.transform.anchorPoint);
+
+```
+
+
+
+
 
 ## 缓动
 
