@@ -8,7 +8,7 @@ draft: false
 date: 2024-05-06
 lastmod: 2026-07-09
 ---
----
+
 
 
 
@@ -23,7 +23,7 @@ lastmod: 2026-07-09
 targetLayer = thisComp.layer("子层");
 childLayer = targetLayer;
 while(childLayer.hasParent){
-childLayer = childLayer.parent;
+	childLayer = childLayer.parent;
 }
 parentLayer = childLayer; targetLayer.toComp(parentLayer.transform.anchorPoint);
 

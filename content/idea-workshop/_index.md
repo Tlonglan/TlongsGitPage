@@ -4,5 +4,4 @@ type: directory-list
 weight: 2
 ---
 
-
-存放一些个人作品的地方
+星光闪耀，照亮世界
