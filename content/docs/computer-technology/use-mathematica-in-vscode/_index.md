@@ -25,10 +25,14 @@ layout: single
 
 ### Wolfram Language（shigma）
 
+> 这个扩展主要是用于实现语法高亮
+
 1. 安装扩展
-2. 根据提示进行配置 Wolfram Language Server 扩展
+2. 根据提示进行配置 Wolfram Language 扩展
 
 ### Wolfram Language Server（lsp-wl） 
+
+> 这个扩展主要是用于实现内置函数自动补全、悬浮帮助文档以及调试
 
 1. 安装扩展
 2. 下载 [wl-lsp](https://github.com/kenkangxgwe/lsp-wl)
