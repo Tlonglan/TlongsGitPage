@@ -4,7 +4,7 @@ draft: false
 # 内容属性
 tags: [5-经验技巧]
 series: []
-categories: [计算机, VScode, jupyter, Mathematica]
+categories: [计算机, vscode, jupyter, Mathematica]
 type: docs
 # 时间属性
 date: 2026-09-25

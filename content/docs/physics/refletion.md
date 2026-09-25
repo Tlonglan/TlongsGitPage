@@ -3,7 +3,7 @@ title: 计算-金属与非金属的反射系数
 type: docs
 series: [精选内容]
 tags: [5-方案教程]
-categories: [物理, 菲涅尔现象, Mathematica语言, 计算]
+categories: [物理, 菲涅尔现象, Mathematica, 计算]
 draft: false
 date: 2026-05-06
 lastmod: 2026-05-07
