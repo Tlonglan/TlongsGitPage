@@ -2,7 +2,7 @@
 title: 在vscdoe中使用Mathematica
 draft: false
 # 内容属性
-tags: [5-经验技巧]
+tags: [5-方案教程]
 series: []
 categories: [计算机, vscode, jupyter, Mathematica]
 type: docs
