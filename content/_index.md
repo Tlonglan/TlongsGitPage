@@ -68,7 +68,7 @@ toc: false
 
 
 
-## 探索
+## 🧭探索
 
 
 {{< cards cols="2" >}}
@@ -98,10 +98,20 @@ toc: false
 
 <br>
 
-## 精选内容
+## ✨精选内容
 <br>
 
-{{< list-by-taxonomy taxonomy="series" terms="精选内容" match="any" orderByDate="true">}}
+{{< list-by-taxonomy taxonomy="series" terms="精选内容" match="any" orderByDate="true" limit="10" >}}
+
+
+<br>
+
+## 🕘最近更新
+<br>
+
+<!-- {{< list-by-taxonomy paths="docs,blog, greatresource, idea-workshop" orderByDate="true" limit="10" >}} -->
+
+{{< list-by-taxonomy types="docs,blog" orderByDate="true" limit="10" >}}
 
 
 <!-- <br>

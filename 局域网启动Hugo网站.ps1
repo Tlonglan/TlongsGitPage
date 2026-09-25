@@ -4,7 +4,7 @@
 # ========== 将脚本中的目录（工作目录）切换到脚本所在目录 ==========
 # $scriptPath = $MyInvocation.MyCommand.Path
 # $scriptDir = Split-Path -Parent $scriptPath
-$scriptDir = "E:/1_Project/TlongsPage/MyGitPage/TlongsGitPage"
+$scriptDir = "E:/1_Project/TlongsGitPage"
 Set-Location $scriptDir
 Write-Host "已自动切换到项目目录：$scriptDir" -ForegroundColor Cyan
 

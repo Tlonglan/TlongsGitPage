@@ -12,8 +12,28 @@
 {{- $excludeParam := .Get "exclude" | default "" -}}
 {{- $pathsParam := .Get "paths" | default "" -}}
 {{- $orderByDate := .Get "orderByDate" | default false -}}   <!-- 新增 -->
+{{- $limit := .Get "limit" | default 0 -}}
+{{- $typesParam := .Get "types" | default "" -}}
+
+
 
 {{- $pages := site.AllPages -}}
+
+{{- /* 0. 按类型type筛选 (如果提供了 paths) */ -}}
+{{- if ne $typesParam "" -}}
+  {{- $typeList := split $typesParam "," -}}
+  {{- $filtered := slice -}}
+  {{- range $pages -}}
+    {{- $page := . -}}
+    {{- $t := .Type -}}
+    {{- range $typeList -}}
+      {{- if eq $t (trim . " ") -}}
+        {{- $filtered = $filtered | append $page -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $pages = $filtered -}}
+{{- end -}}
 
 {{- /* 1. 按路径筛选 (如果提供了 paths) */ -}}
 {{- if ne $pathsParam "" -}}
@@ -85,6 +105,7 @@
 {{- if $pages -}}
   <div class="hextra-archive-timeline">
     <ul class="hx:ml-1 hx:pl-1 hx:space-y-2">
+
       {{- /* 按指定方式排序 */ -}}
       {{- $sortedPages := $pages -}}
       {{- if $orderByDate -}}
@@ -92,6 +113,10 @@
       {{- else -}}
         {{- $sortedPages = $pages.ByTitle -}}
       {{- end -}}
+      {{- if gt $limit 0 -}}
+        {{- $sortedPages = $sortedPages | first $limit -}}
+      {{- end -}}
+
 
       {{- range $sortedPages -}}
         <li class="hx:flex hx:items-baseline">
