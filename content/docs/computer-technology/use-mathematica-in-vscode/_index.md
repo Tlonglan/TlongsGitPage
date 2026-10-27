@@ -23,14 +23,14 @@ layout: single
 
 ## 在vscode 安装 Wolfram 相关扩展
 
-### Wolfram Language（shigma）
+### 安装 Wolfram Language（shigma）
 
 > 这个扩展主要是用于实现语法高亮
 
 1. 安装扩展
 2. 根据提示进行配置 Wolfram Language 扩展
 
-### Wolfram Language Server（lsp-wl） 
+### 安装 Wolfram Language Server（lsp-wl） 
 
 > 这个扩展主要是用于实现内置函数自动补全、悬浮帮助文档以及调试
 
@@ -56,7 +56,10 @@ layout: single
 
 ## 在 vscode 的 jupyter 中使用Mathematica
 ### 安装 Miniconda
-### 安装jupyter包（建议在新环境中安装，不要安装在base环境中）
+### 安装jupyter包
+
+> [!tips] 小贴士
+> 建议在新环境中安装，不要安装在base环境中
 
 #### 创建新环境
 ``` python
